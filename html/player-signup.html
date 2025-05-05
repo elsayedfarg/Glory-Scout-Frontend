@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="../css/player-signup.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- IMPORT SCRIPTS (axios) -->
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
+    <!--// IMPORT SCRIPTS (axios) //-->
 </head>
 
 <body>
@@ -15,7 +19,6 @@
     <header class="navbar">
         <div class="container">
             <div class="logo">
-                <!-- ضع مسار صورة اللوجو الخاصة بك هنا -->
                 <img src="../images/Frame 38.png" alt="Glory Scout">
             </div>
             <nav class="nav-links">
@@ -27,7 +30,9 @@
             <div class="auth-buttons">
                 <a href="./player-signup.html" class="player-btn active-btn">For Players</a>
                 <a href="./coach-signup.html" class="coach-btn">For Coaches</a>
-                <a href="login.html" class="login-btn">Login</a>
+                <!-- <a href="login.html" class="login-btn">Login</a> -->
+                <a href="./login.html" class="login-btn" id="loginBtn">Login</a>
+                <a href="#" id="logoutBtn" class="logout-btn hidden">Logout</a>
             </div>
             <div class="menu-toggle">
                 <i class="fas fa-bars"></i>
@@ -55,53 +60,47 @@
                     </div>
 
                     <div class="form-row">
+                        <div class="form-group">
+                            <input type="tel" id="phone" placeholder="Enter Your Phone Number" required>
+                        </div>
                         <div class="form-group password-group">
                             <input type="password" id="password" placeholder="Enter Your Password" required>
                             <i class="fas fa-eye toggle-password"></i>
-                            <div class="password-requirements">
-                                <p>Password must contain:</p>
-                                <ul>
-                                    <li id="length">At least 8 characters</li>
-                                    <li id="uppercase">At least 1 uppercase letter</li>
-                                    <li id="lowercase">At least 1 lowercase letter</li>
-                                    <li id="number">At least 1 number</li>
-                                    <li id="special">At least 1 special character</li>
-                                </ul>
-                            </div>
                         </div>
+                    </div>
+
+                    <div class="form-row">
                         <div class="form-group password-group">
                             <input type="password" id="confirmPassword" placeholder="Confirm Your Password" required>
                             <i class="fas fa-eye toggle-password"></i>
                         </div>
-                    </div>
-
-                    <div class="form-row">
                         <div class="form-group">
                             <input type="number" id="age" placeholder="Enter Your Age" min="10" max="50" required>
                         </div>
+                    </div>
+
+                    <div class="form-row">
                         <div class="form-group">
                             <input type="number" id="height" placeholder="Enter Your Height (CM)" min="120" max="220"
                                 required>
                         </div>
-                    </div>
-
-                    <div class="form-row">
                         <div class="form-group">
                             <input type="number" id="weight" placeholder="Enter Your Weight (KG)" min="30" max="150"
                                 required>
                         </div>
-                        <div class="form-group select-group">
-                            <select id="position" required>
-                                <option value="" disabled selected>Select your position</option>
-                                <option value="goalkeeper">Goalkeeper</option>
-                                <option value="defender">Defender</option>
-                                <option value="midfielder">Midfielder</option>
-                                <option value="forward">Forward</option>
-                                <option value="striker">Striker</option>
-                                <option value="winger">Winger</option>
-                            </select>
-                            <i class="fas fa-chevron-down select-arrow"></i>
-                        </div>
+                    </div>
+
+                    <div class="form-group select-group">
+                        <select id="position" required>
+                            <option value="" disabled selected>Select your position</option>
+                            <option value="goalkeeper">Goalkeeper</option>
+                            <option value="defender">Defender</option>
+                            <option value="midfielder">Midfielder</option>
+                            <option value="forward">Forward</option>
+                            <option value="striker">Striker</option>
+                            <option value="winger">Winger</option>
+                        </select>
+                        <i class="fas fa-chevron-down select-arrow"></i>
                     </div>
 
                     <div class="form-group file-upload-group">
@@ -113,18 +112,7 @@
                         <div class="file-name">No File Chosen</div>
                     </div>
 
-                    <div class="form-group file-upload-group">
-                        <label for="skillsVideo" class="file-upload-label">
-                            <span class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></span>
-                            <span class="upload-text">Upload your skills video</span>
-                        </label>
-                        <input type="file" id="skillsVideo" class="file-upload-input" accept="video/*">
-                        <div class="file-name">No File Chosen</div>
-                    </div>
-
                     <button type="submit" class="signup-button">Sign Up</button>
-
-                    <a href="login.html" class="login-link">Login</a>
 
                     <div class="divider">
                         <span>Or Continue with</span>
@@ -209,7 +197,6 @@
     <footer>
         <div class="container">
             <div class="footer-logo">
-                <!-- ضع مسار صورة اللوجو الخاصة بك هنا -->
                 <img src="../images/Frame 38.png" alt="Glory Scout">
             </div>
 
