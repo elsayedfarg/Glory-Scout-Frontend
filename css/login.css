@@ -111,6 +111,23 @@ button {
     cursor: pointer;
 }
 
+/* Logout Button */
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+    border: 2px solid #dc3545;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+}
+
+
 /* Login Section */
 .login-section {
     display: flex;
@@ -182,13 +199,17 @@ button {
     position: relative;
 }
 
+.password-container {
+    position: relative;
+}
+
 .toggle-password {
     position: absolute;
-    right: 15px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-muted);
     cursor: pointer;
+    color: #777;
 }
 
 .forgot-password {
@@ -565,25 +586,24 @@ footer {
 .mobile-menu {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    right: -100%;
+    width: 80%;
     height: 100%;
     background-color: var(--background-color);
-    z-index: 100;
+    z-index: 9999;
+    transition: right 0.3s ease;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
 }
 
 .mobile-menu.active {
-    transform: translateX(0);
+    right: 0;
 }
 
 .mobile-menu-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
 }
 
 .mobile-menu-close {
@@ -630,4 +650,8 @@ footer {
 .mobile-signup-btn {
     background-color: var(--primary-color);
     color: black;
+}
+
+.hidden {
+    display: none !important;
 }

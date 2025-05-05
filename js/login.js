@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
         togglePassword.addEventListener('click', function () {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-
-            // Toggle icon
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
         });
@@ -16,16 +14,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Mobile Menu Toggle
     const menuToggle = document.querySelector('.menu-toggle');
-
     if (menuToggle) {
         menuToggle.addEventListener('click', function () {
-            // Create mobile menu only if it doesn't already exist
             if (!document.querySelector('.mobile-menu')) {
                 createMobileMenu();
             }
-
-            const mobileMenu = document.querySelector('.mobile-menu');
-            mobileMenu.classList.toggle('active'); // Toggle active class to show/hide menu
+            document.querySelector('.mobile-menu').classList.toggle('active');
         });
     }
 
@@ -36,9 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (testimonialCards && prevBtn && nextBtn) {
         let currentIndex = 0;
-        const totalSlides = document.querySelectorAll('.testimonial-card').length;
 
-        // Clone the testimonial cards for infinite loop
         const cloneCards = () => {
             const cards = document.querySelectorAll('.testimonial-card');
             cards.forEach(card => {
@@ -47,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         };
 
-        // Initialize slider
         const initSlider = () => {
             const cards = document.querySelectorAll('.testimonial-card');
             const cardWidth = 100 / cards.length;
@@ -57,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
             testimonialCards.style.width = `${cards.length * 100}%`;
         };
 
-        // Move to slide
         const moveToSlide = (index) => {
             const cards = document.querySelectorAll('.testimonial-card');
             const cardWidth = 100 / cards.length;
@@ -65,11 +55,9 @@ document.addEventListener('DOMContentLoaded', function () {
             currentIndex = index;
         };
 
-        // Next slide
         nextBtn.addEventListener('click', () => {
             const cards = document.querySelectorAll('.testimonial-card');
             if (currentIndex === cards.length - 1) {
-                // Reset to first slide instantly without animation
                 testimonialCards.style.transition = 'none';
                 moveToSlide(0);
                 setTimeout(() => {
@@ -80,11 +68,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Previous slide
         prevBtn.addEventListener('click', () => {
             const cards = document.querySelectorAll('.testimonial-card');
             if (currentIndex === 0) {
-                // Go to last slide instantly without animation
                 testimonialCards.style.transition = 'none';
                 moveToSlide(cards.length - 1);
                 setTimeout(() => {
@@ -95,43 +81,106 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Tab buttons
         const tabBtns = document.querySelectorAll('.tab-btn');
         tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 tabBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                moveToSlide(0); // Reset slider to first slide on tab change
+                moveToSlide(0);
             });
         });
 
-        // Form submission
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            loginForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-
-                // Validate form
-                if (!email || !password) {
-                    alert('Please fill in all fields');
-                    return;
-                }
-
-                // Simulate form submission (you can replace this with real submission logic)
-                console.log('Login attempt:', { email, password });
-                alert('Login successful!');
-            });
-        }
-
-        // Initialize slider and clone testimonial cards for infinite loop
         cloneCards();
         initSlider();
     }
 
-    // Function to create mobile menu
+    // Login Form
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const BaseURL = "http://glory-scout.tryasp.net/api";
+            const emailSpan = document.getElementById('contactEmail');
+
+            axios.post(`${BaseURL}/Auth/login`, { email, password }, {
+                headers: { "Content-Type": "application/json" }
+            })
+                .then((response) => {
+                    localStorage.setItem("token", response.data.token);
+                    alert("You have logged in successfully");
+                    document.getElementById('email').value = '';
+                    document.getElementById('password').value = '';
+                    const email = response.data.email;
+                    if (emailSpan) {
+                        emailSpan.textContent = email;
+                    }
+                    SetupUI();
+
+                })
+                .catch((error) => {
+                    alert("Login failed: " + (error.response ? error.response.data : error.message));
+                });
+        });
+    }
+
+    // Setup UI based on login status
+    function SetupUI() {
+        const token = localStorage.getItem("token");
+
+        // Always re-fetch buttons in case DOM changed
+        const loginBtn = document.getElementById("loginBtn");
+        const signupBtn = document.getElementById("signupBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        if (token) {
+            if (loginBtn) loginBtn.classList.add('hidden');
+            if (signupBtn) signupBtn.classList.add('hidden');
+            if (logoutBtn) {
+                logoutBtn.classList.remove('hidden');
+                logoutBtn.style.display = 'inline-block'; // <-- Show it explicitly
+            }
+        } else {
+            if (loginBtn) loginBtn.classList.remove('hidden');
+            if (signupBtn) signupBtn.classList.remove('hidden');
+            if (logoutBtn) {
+                logoutBtn.classList.add('hidden');
+                logoutBtn.style.display = 'none'; // <-- Hide it explicitly
+            }
+        }
+
+        // Update mobile buttons
+        const mobileAuth = document.getElementById("mobileAuth");
+        if (mobileAuth) {
+            mobileAuth.innerHTML = token
+                ? `<a href="#" id="mobileLogoutBtn" class="logout-btn">Logout</a>`
+                : `
+                    <a href="./login.html" class="mobile-login-btn">Login</a>
+                    <a href="./create-account.html" class="mobile-signup-btn">Sign Up</a>
+                `;
+        }
+    }
+
+    // Logout logic
+    function logout() {
+        localStorage.removeItem("token");
+        alert("Logged out successfully");
+        const emailSpan = document.getElementById('contactEmail');
+        if (emailSpan) {
+            emailSpan.textContent = '';
+        }
+        SetupUI();
+    }
+
+    // Bind logout
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", logout);
+    }
+
+    // Create mobile menu
     function createMobileMenu() {
         const mobileMenu = document.createElement('div');
         mobileMenu.className = 'mobile-menu';
@@ -139,33 +188,52 @@ document.addEventListener('DOMContentLoaded', function () {
         mobileMenu.innerHTML = `
             <div class="mobile-menu-header">
                 <div class="logo">
-                    <!-- Replace with your logo path -->
-                    <img src="your-logo.png" alt="Glory Scout">
+                    <img src="../images/Frame 38.png" alt="Glory Scout">
                 </div>
                 <button class="mobile-menu-close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <nav class="mobile-nav-links">
-                <a href="#" class="active">Home</a>
-                <a href="#">Players</a>
-                <a href="#">Coaches</a>
-                <a href="#">About Us</a>
+                <a href="./index.html" class="active">Home</a>
+                <a href="./player-home.html">Players</a>
+                <a href="./coach-home.html">Coaches</a>
+                <a href="./about-us.html">About Us</a>
             </nav>
-            
-            <div class="mobile-auth-buttons">
-                <a href="#" class="mobile-login-btn">Login</a>
-                <a href="#" class="mobile-signup-btn">Sign Up</a>
+
+            <div class="mobile-auth-buttons" id="mobileAuth">
             </div>
         `;
 
         document.body.appendChild(mobileMenu);
 
-        // Close mobile menu
         const closeBtn = mobileMenu.querySelector('.mobile-menu-close');
         closeBtn.addEventListener('click', function () {
             mobileMenu.classList.remove('active');
         });
+
+        const mobileAuth = document.getElementById("mobileAuth");
+        const token = localStorage.getItem("token");
+        mobileAuth.innerHTML = token ? `
+                <a href="#" id="mobileLogoutBtn" class="logout-btn">Logout</a>
+            ` : `
+                <a href="./login.html" class="mobile-login-btn">Login</a>
+                <a href="./create-account.html" class="mobile-signup-btn">Sign Up</a>
+            `;
+
+        SetupUI();
+
+
+        const mobileLogoutBtn = document.getElementById("mobileLogoutBtn");
+        if (mobileLogoutBtn) {
+            mobileLogoutBtn.addEventListener('click', function () {
+                logout();
+                mobileMenu.classList.remove('active');
+            });
+        }
     }
+
+    // Run on load
+    SetupUI();
 });
