@@ -1,0 +1,318 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arial", sans-serif;
+  }
+  
+  body {
+    background-color: #121212;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #ffffff;
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1a1a1a;
+    border-radius: 30px;
+    margin: 15px 10px 0 10px;
+    padding: 20px 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: none;
+  }
+  
+  .logo img {
+    height: 70px;
+  }
+  
+  .nav-menu ul {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .nav-menu a {
+    font-size: 16px;
+    transition: color 0.3s;
+  }
+  
+  .nav-menu a:hover {
+    color: #00ff4c;
+  }
+  
+  .auth-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .sign-up {
+    font-size: 16px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: color 0.3s;
+  }
+  
+  .sign-up:hover {
+    color: #00ff4c;
+  }
+  
+  .login-btn {
+    background-color: #00ff4c;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 25px;
+    border-radius: 25px;
+    transition: background-color 0.3s;
+  }
+  
+  .login-btn:hover {
+    background-color: #00cc3d;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 50px 0;
+  }
+  
+  .faq-container {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    background-color: #1a1a1a;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .illustration-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .support-img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .faq-content {
+    flex: 1;
+  }
+  
+  .faq-content h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+  }
+  
+  .faq-content p {
+    color: #cccccc;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .form-input,
+  .form-textarea {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 20px;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .form-textarea {
+    min-height: 150px;
+    resize: none;
+    border-radius: 15px;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .submit-btn {
+    background-color: #00ff4c;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+  }
+  
+  .submit-btn:hover {
+    background-color: #00cc3d;
+  }
+  
+  .footer {
+    padding: 40px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .footer-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .footer-logo img {
+    height: 100px;
+  }
+  
+  .footer-nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .contact-item i {
+    color: #00ff4c;
+  }
+  
+  .social-copyright {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .social-icons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: #00ff4c;
+    color: #000000;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
+  
+  .social-icons a:hover {
+    background-color: #00cc3d;
+  }
+  
+  .copyright {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #999999;
+  }
+  
+  .policy-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .policy-links a {
+    color: #999999;
+    transition: color 0.3s;
+  }
+  
+  .policy-links a:hover {
+    color: #00ff4c;
+  }
+  
+  @media (max-width: 992px) {
+    .faq-container {
+      flex-direction: column;
+    }
+  
+    .illustration-container {
+      order: -1;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .nav-menu ul {
+      gap: 15px;
+    }
+  
+    .form-row {
+      flex-direction: column;
+    }
+  
+    .contact-info {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .footer-nav ul {
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .nav-menu ul {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .auth-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  

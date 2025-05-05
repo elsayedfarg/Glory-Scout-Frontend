@@ -1,0 +1,1051 @@
+/* Base Styles */
+:root {
+    --primary-bg: #121212;
+    --secondary-bg: #1a1a1a;
+    --card-bg: #1e1e1e;
+    --accent-green: #4AFF32;
+    --accent-pink: #ec4899;
+    --text-color: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --border-color: #333333;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  a {
+    text-decoration: none;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: var(--accent-green);
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  .green-text {
+    color: var(--accent-green);
+  }
+  
+  .green-icon {
+    color: var(--accent-green);
+  }
+  
+  .pink-text {
+    color: var(--accent-pink);
+  }
+  
+  /* Header Styles */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-radius: 50px;
+    background-color: rgba(30, 30, 30, 0.8);
+    margin: 20px 0;
+  }
+  
+  .logo {
+    padding-left: 20px;
+  }
+  
+  .logo-img {
+    height: 50px;
+    width: auto;
+  }
+  
+  .main-nav ul {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .main-nav a {
+    font-weight: 500;
+  }
+  
+  .main-nav a.active {
+    color: var(--accent-green);
+  }
+  
+  .auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-right: 20px;
+  }
+  
+  .login-link {
+    font-weight: 500;
+  }
+  
+  .signup-btn {
+    background-color: var(--accent-green);
+    color: #121212;
+    padding: 8px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .signup-btn:hover {
+    background-color: #3cca70;
+    color: #121212;
+    transform: translateY(-2px);
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 0;
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    margin-bottom: 30px;
+    overflow: hidden;
+  }
+  
+  .hero-content {
+    flex: 1;
+    padding: 0 40px;
+  }
+  
+  .hero-content h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .hero-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    line-height: 1.2;
+  }
+  
+  .hero-title span {
+    color: var(--accent-green);
+  }
+  
+  .hero-description {
+    margin-top: 40px;
+  }
+  
+  .hero-description h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .hero-description p {
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+  }
+  
+  .hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  /* Banner Section */
+  .banner-section {
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .banner-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .banner-strip {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: scrollBanner 20s linear infinite;
+    transform: rotate(-5deg);
+  }
+  
+  .banner-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--primary-bg);
+    background-color: var(--accent-green);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  
+  @keyframes scrollBanner {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  /* Features Section */
+  .features-section {
+    padding: 40px 0;
+    position: relative;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .section-badge {
+    display: inline-block;
+    background-color: rgba(74, 222, 128, 0.1);
+    color: var(--accent-green);
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    line-height: 1.2;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+  
+  .feature-card {
+    padding: 20px 0;
+  }
+  
+  .feature-card h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+  }
+  
+  .feature-card p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  .feature-image {
+    margin-bottom: 20px;
+  }
+  
+  .image-placeholder {
+    width: 100px;
+    height: 100px;
+    background-color: var(--border-color);
+    border-radius: 8px;
+  }
+  
+  /* Achievement Section */
+  .achievement-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 0;
+    margin-bottom: 30px;
+  }
+  
+  .achievement-content {
+    flex: 1;
+    padding-right: 40px;
+  }
+  
+  .achievement-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    color: var(--accent-green);
+  }
+  
+  .achievement-content p {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    max-width: 400px;
+  }
+  
+  .learn-more {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .learn-more i {
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .learn-more:hover {
+    color: var(--accent-green);
+  }
+  
+  .learn-more:hover i {
+    transform: translateX(5px);
+  }
+  
+  .achievement-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .achievement-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 30px;
+  }
+  
+  /* Connect Section */
+  .connect-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 0;
+    margin-bottom: 30px;
+  }
+  
+  .connect-logo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .connect-logo img {
+    max-width: 500px;
+    height: auto;
+  }
+  
+  .connect-content {
+    flex: 1;
+    padding-left: 40px;
+  }
+  
+  .connect-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    color: var(--accent-green);
+  }
+  
+  .connect-content p {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    max-width: 400px;
+  }
+  
+  /* Players World Section */
+  .players-world-section {
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .world-map {
+    background-color: #3b0764;
+    border-radius: 20px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .fe-icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .fe-icon {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .fe-icon:nth-child(1) {
+    top: 20%;
+    left: 10%;
+  }
+  .fe-icon:nth-child(2) {
+    top: 30%;
+    left: 25%;
+  }
+  .fe-icon:nth-child(3) {
+    top: 15%;
+    left: 40%;
+  }
+  .fe-icon:nth-child(4) {
+    top: 50%;
+    left: 15%;
+  }
+  .fe-icon:nth-child(5) {
+    top: 70%;
+    left: 30%;
+  }
+  .fe-icon:nth-child(6) {
+    top: 25%;
+    left: 60%;
+  }
+  .fe-icon:nth-child(7) {
+    top: 45%;
+    left: 75%;
+  }
+  .fe-icon:nth-child(8) {
+    top: 65%;
+    left: 85%;
+  }
+  .fe-icon:nth-child(9) {
+    top: 80%;
+    left: 50%;
+  }
+  .fe-icon:nth-child(10) {
+    top: 10%;
+    left: 80%;
+  }
+  .fe-icon:nth-child(11) {
+    top: 60%;
+    left: 5%;
+  }
+  .fe-icon:nth-child(12) {
+    top: 40%;
+    left: 90%;
+  }
+  
+  .world-title {
+    font-size: 42px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 2px;
+    z-index: 2;
+  }
+  
+  /* Built For Growth Section */
+  .built-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 0;
+    margin-bottom: 30px;
+    background-color: var(--primary-bg);
+  }
+  
+  .built-content {
+    flex: 1;
+    padding-right: 40px;
+  }
+  
+  .built-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    line-height: 1.2;
+    color: var(--accent-green);
+  }
+  
+  .built-feature h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .built-feature p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    max-width: 400px;
+  }
+  
+  .built-images {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  
+  .fifa-ball {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .ball-image {
+    max-width: 400px;
+    height: auto;
+  }
+  
+  .fifa-logo {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    z-index: 1;
+  }
+  
+  .fifa-text {
+    font-size: 60px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    line-height: 1;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+  
+  .year-text {
+    font-size: 80px;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.8;
+  }
+  
+  /* Built For Players Section */
+  .built-players-section {
+    padding: 40px 0;
+    margin-bottom: 30px;
+  }
+  
+  .player-features {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+  }
+  
+  .player-content {
+    flex: 1;
+    padding-right: 40px;
+  }
+  
+  .player-content p {
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+  
+  .player-circle {
+    flex: 1;
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+  }
+  
+  .player-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .feature-dots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .feature-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: var(--accent-pink);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(150px) rotate(calc(-1 * var(--angle)));
+  }
+  
+  .feature-dot span {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 14px;
+    color: var(--text-color);
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  /* App Showcase Section */
+  .app-showcase-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .app-card {
+    flex: 1;
+    background-color: #2d5a27;
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    transform: rotate(-5deg);
+  }
+  
+  .app-card.left-card {
+    background-color: #2d5a27;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .app-card.right-card {
+    background-color: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: rotate(5deg);
+  }
+  
+  .app-player-image {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .app-content {
+    padding: 10px 0;
+  }
+  
+  .app-content h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  
+  .app-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+  }
+  
+  .sign-in-btn {
+    background-color: #121212;
+    color: #fff;
+  }
+  
+  .sign-up-btn {
+    background-color: var(--accent-green);
+    color: #121212;
+  }
+  
+  .app-screen-image {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+  }
+  
+  /* Start Journey Section */
+  .start-journey-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 0;
+    margin-bottom: 30px;
+    background: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo_2025-05-04_05-55-12.jpg-fhSdH.jpeg")
+      no-repeat center center;
+    background-size: cover;
+    border-radius: 20px;
+    position: relative;
+  }
+  
+  .start-journey-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+  }
+  
+  .journey-content {
+    flex: 2;
+    padding: 0 40px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .journey-content h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+  
+  .journey-content p {
+    color: var(--text-secondary);
+    max-width: 600px;
+  }
+  
+  .journey-action {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .explore-btn {
+    background-color: var(--accent-green);
+    color: #121212;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+  
+  .explore-btn:hover {
+    background-color: #3cca70;
+    color: #121212;
+    transform: translateY(-2px);
+  }
+  
+  /* Footer Styles */
+  .footer {
+    margin-top: auto;
+    background-color: var(--primary-bg);
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .footer-main {
+    display: flex;
+    flex-direction: column;
+    padding: 60px 0 40px;
+  }
+  
+  .footer-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .footer-logo img {
+    height: 60px;
+    width: auto;
+  }
+  
+  .footer-newsletter {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  
+  .newsletter-form {
+    display: flex;
+    align-items: center;
+    background-color: var(--secondary-bg);
+    border-radius: 50px;
+    padding: 5px;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .newsletter-form input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px 15px;
+    color: var(--text-color);
+    font-size: 14px;
+  }
+  
+  .newsletter-form input:focus {
+    outline: none;
+  }
+  
+  .newsletter-form .submit-btn {
+    background-color: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .newsletter-form .submit-btn:hover {
+    color: var(--accent-green);
+  }
+  
+  .footer-nav-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  
+  .footer-nav-column {
+    flex: 1;
+    min-width: 150px;
+  }
+  
+  .footer-nav-column h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+  }
+  
+  .footer-nav-column ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .footer-nav-column a {
+    color: var(--text-secondary);
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-nav-column a:hover {
+    color: var(--accent-green);
+  }
+  
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .copyright {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .copyright p {
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+  
+  .copyright a {
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .social-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--secondary-bg);
+    transition: all 0.3s ease;
+  }
+  
+  .social-link i {
+    color: var(--text-color);
+    font-size: 14px;
+  }
+  
+  .social-link:hover {
+    background-color: var(--accent-green);
+  }
+  
+  .social-link:hover i {
+    color: var(--primary-bg);
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 992px) {
+    .hero-section,
+    .achievement-section,
+    .connect-section,
+    .built-section,
+    .player-features,
+    .app-showcase-section,
+    .start-journey-section {
+      flex-direction: column;
+    }
+  
+    .hero-content,
+    .achievement-content,
+    .connect-content,
+    .built-content,
+    .player-content,
+    .journey-content {
+      padding: 0;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+  
+    .achievement-content p,
+    .connect-content p,
+    .built-feature p,
+    .journey-content p {
+      max-width: 100%;
+    }
+  
+    .features-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  
+    .feature-card {
+      text-align: center;
+    }
+  
+    .image-placeholder {
+      margin: 0 auto;
+    }
+  
+    .app-card {
+      margin-bottom: 20px;
+      transform: none !important;
+    }
+  
+    .footer-nav-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .footer-nav-column {
+      margin-bottom: 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      padding: 15px;
+      gap: 15px;
+    }
+  
+    .main-nav ul {
+      gap: 15px;
+    }
+  
+    .hero-title,
+    .section-title,
+    .achievement-title,
+    .connect-title,
+    .built-title,
+    .world-title,
+    .journey-content h2 {
+      font-size: 28px;
+    }
+  
+    .footer-bottom {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .copyright {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .fifa-text {
+      font-size: 40px;
+    }
+  
+    .year-text {
+      font-size: 60px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .main-nav ul {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .auth-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .footer-nav ul {
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+  
+    .player-circle {
+      width: 250px;
+      height: 250px;
+    }
+  
+    .feature-dot {
+      transform: translate(-50%, -50%) rotate(var(--angle)) translateX(125px) rotate(calc(-1 * var(--angle)));
+    }
+  
+    .feature-dot span {
+      font-size: 12px;
+    }
+  
+    .journey-action {
+      margin-top: 20px;
+    }
+  }
+  

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Glory Scout Football Academy</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <!-- ضع مسار صورة اللوجو الخاصة بك هنا -->
+                <img src="../images/Frame 38.png" alt="Glory Scout">
+            </div>
+            <nav class="nav-links">
+                <a href="./index.html">Home</a>
+                <a href="./player-home.html">Players</a>
+                <a href="./coach-home.html">Coaches</a>
+                <a href="./about-us.html">About Us</a>
+            </nav>
+            <div class="auth-buttons">
+                <a href="./login.html" class="login-btn">Login</a>
+                <a href="./create-account.html" class="signup-btn">Sign Up</a>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Login Form -->
+        <section class="login-section">
+            <div class="login-container">
+                <h1>Login</h1>
+                <p class="welcome-text">Welcome back! Please log in to access your account.</p>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Enter your Email" required>
+                    </div>
+                    <div class="form-group password-group">
+                        <input type="password" id="password" placeholder="Enter your Password" required>
+                        <i class="fas fa-eye toggle-password"></i>
+                    </div>
+
+                    <div class="forgot-password">
+                        <a href="./password-reset.html">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="login-button">Login</button>
+
+                    <div class="divider">
+                        <span>Or Continue with</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button type="button" class="social-btn google">
+                            <i class="fab fa-google"></i>
+                        </button>
+                        <button type="button" class="social-btn facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button type="button" class="social-btn apple">
+                            <i class="fab fa-apple"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section">
+            <div class="container">
+                <div class="testimonials-header">
+                    <h2>Our <span>Testimonials</span></h2>
+                    <div class="testimonial-tabs">
+                        <button class="tab-btn active">For Players</button>
+                        <button class="tab-btn">For Coaches</button>
+                    </div>
+                </div>
+
+                <p class="testimonials-intro">
+                    At GloryScout, we take pride in connecting football talent with opportunities. Here's what our
+                    community has to say about their experience.
+                </p>
+
+                <div class="testimonials-slider">
+                    <div class="testimonial-cards">
+                        <div class="testimonial-card">
+                            <div class="quote-icon">"</div>
+                            <p class="testimonial-text">
+                                GloryScout has been my go-to platform for discovering football talent. Their
+                                user-friendly interface and detailed scouting reports have made finding the perfect
+                                players for my team effortless. Thanks to GloryScout, I've built a winning squad.
+                            </p>
+                            <p class="testimonial-author">Rona</p>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="quote-icon">"</div>
+                            <p class="testimonial-text">
+                                I recently started coaching a new team, and GloryScout has been instrumental in helping
+                                me find talented players and build a strong squad. Their platform and detailed scouting
+                                reports have been invaluable to my success.
+                            </p>
+                            <p class="testimonial-author">Kareem</p>
+                        </div>
+
+                        <div class="testimonial-card">
+                            <div class="quote-icon">"</div>
+                            <p class="testimonial-text">
+                                I love the convenience of GloryScout's platform. It allows me to discover talented
+                                players and manage my team efficiently. The platform is user-friendly and reliable,
+                                giving me peace of mind.
+                            </p>
+                            <p class="testimonial-author">Mensah</p>
+                        </div>
+                    </div>
+
+                    <button class="slider-arrow prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="slider-arrow next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <!-- ضع مسار صورة اللوجو الخاصة بك هنا -->
+                <img src="../images/Frame 38.png" alt="Glory Scout">
+            </div>
+
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#">Players</a>
+                <a href="#">Coaches</a>
+                <a href="#">Contact Us</a>
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>kareemsaad222@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+20 122 671 1259</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>zagazig</span>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="#" class="social-link">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>Glory scout All Rights Reserved</p>
+                <div class="footer-policies">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/login.js"></script>
+</body>
+
+</html>

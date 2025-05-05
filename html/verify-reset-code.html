@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Reset Code - Glory Scout Football Academy</title>
+    <link rel="stylesheet" href="../css/password-reset.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <img src="../images/Frame 38.png" alt="Glory Scout Logo" class="logo-img">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./player-home.html">Player</a></li>
+                    <li><a href="./coach-home.html">Coaches</a></li>
+                    <li><a href="./about-us.html">About Us</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="./create-account.html" class="sign-up">Sign Up</a>
+                <a href="./login.html" class="login-btn">Login</a>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="verify-card">
+                <div class="dot-pattern"></div>
+
+                <!-- Verification Code Section -->
+                <div id="verification-section" class="active">
+                    <h1 class="title"><span class="green-text">Verify</span> Code</h1>
+                    <p class="subtitle">We've sent a verification code to your email. Please enter the code below to
+                        continue.</p>
+
+                    <form class="verify-form" id="verify-form">
+                        <div class="code-inputs">
+                            <input type="text" maxlength="1" class="code-input" data-index="0" autofocus>
+                            <input type="text" maxlength="1" class="code-input" data-index="1">
+                            <input type="text" maxlength="1" class="code-input" data-index="2">
+                            <input type="text" maxlength="1" class="code-input" data-index="3">
+                            <input type="text" maxlength="1" class="code-input" data-index="4">
+                            <input type="text" maxlength="1" class="code-input" data-index="5">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="verify-btn">Verify Code</button>
+                        </div>
+
+                        <div class="resend-code">
+                            <p>Didn't receive the code? <a href="#" id="resend-link" class="green-text">Resend Code</a>
+                            </p>
+                            <div class="countdown" id="countdown">Resend in <span id="timer">60</span>s</div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- New Password Section -->
+                <div id="new-password-section">
+                    <h1 class="title"><span class="green-text">Create New</span> Password</h1>
+                    <p class="subtitle">Your identity has been verified. Please create a new password for your account.
+                    </p>
+
+                    <form class="password-form" id="password-form">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <input type="password" id="new-password" placeholder="New Password" required>
+                            <div class="visibility-icon" data-for="new-password">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                        </div>
+
+                        <div class="password-strength">
+                            <div class="strength-meter">
+                                <div class="strength-segment"></div>
+                                <div class="strength-segment"></div>
+                                <div class="strength-segment"></div>
+                                <div class="strength-segment"></div>
+                            </div>
+                            <div class="strength-text">Password Strength</div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                            <div class="visibility-icon" data-for="confirm-password">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                        </div>
+
+                        <div class="password-requirements">
+                            <p>Password must contain:</p>
+                            <ul>
+                                <li id="req-length"><i class="fas fa-circle"></i> At least 8 characters</li>
+                                <li id="req-uppercase"><i class="fas fa-circle"></i> At least one uppercase letter</li>
+                                <li id="req-lowercase"><i class="fas fa-circle"></i> At least one lowercase letter</li>
+                                <li id="req-number"><i class="fas fa-circle"></i> At least one number</li>
+                                <li id="req-special"><i class="fas fa-circle"></i> At least one special character</li>
+                            </ul>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="reset-btn">Reset Password</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Success Section -->
+                <div id="success-section">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h1 class="title"><span class="green-text">Password</span> Reset</h1>
+                    <p class="subtitle">Your password has been reset successfully. You can now login with your new
+                        password.</p>
+
+                    <div class="form-actions">
+                        <a href="login.html" class="login-link">Go to Login</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <img src="../images/Frame 38.png" alt="Glory Scout Logo">
+                </div>
+                <div class="footer-nav">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Players</a></li>
+                        <li><a href="#">Coaches</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-middle">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope green-icon"></i>
+                        <span>kareemsaad252@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt green-icon"></i>
+                        <span>+20 123 671 1259</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt green-icon"></i>
+                        <span>zagazig</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+                <div class="copyright">
+                    <p>Glory Scout All Rights Reserved</p>
+                </div>
+                <div class="policies">
+                    <a href="#">Privacy Policy</a>
+                    <span>|</span>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../js/password-reset.js"></script>
+</body>
+
+</html>

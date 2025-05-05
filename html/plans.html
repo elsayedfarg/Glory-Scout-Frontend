@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plans - Glory Scout Football Academy</title>
+    <link rel="stylesheet" href="../css/plans.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <!-- Empty space for logo -->
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
+                <li><a href="./frequently-asked-questions.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                <li><a href="#"><i class="fas fa-phone"></i> Contact us</a></li>
+                <li><a href="./coach-home.html"><i class="fas fa-dumbbell"></i> Coaches</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Setting</a></li>
+                <li><a href="plans.html" class="active"><i class="fas fa-credit-card"></i> Payment</a></li>
+            </ul>
+
+            <div class="upgrade-box">
+                <h3>Upgrade Account</h3>
+                <button class="view-plan-btn">View Plan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <div class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="top-logo">
+                    <img id="nav-logo" src="../images/Frame 38.png" alt="Logo">
+                </div>
+            </div>
+            <div class="nav-right">
+                <a href="#" class="nav-icon"><i class="fas fa-bell"></i></a>
+                <a href="#" class="nav-icon"><i class="fas fa-comment"></i></a>
+            </div>
+        </nav>
+
+        <!-- Payment Section -->
+        <div class="payment-container">
+            <div class="payment-header">
+                <h1>Choose Your Plan</h1>
+                <p>Select the perfect plan for your needs</p>
+            </div>
+
+            <!-- Pricing Plans -->
+            <div class="pricing-plans">
+                <div class="plan" data-plan="basic">
+                    <div class="plan-badge">Popular</div>
+                    <div class="plan-header">
+                        <h2>Basic</h2>
+                        <div class="plan-price">
+                            <span class="currency">$</span>
+                            <span class="amount">9</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>10 Posts per day</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Basic analytics</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Ad-free experience</span>
+                        </div>
+                        <div class="feature disabled">
+                            <i class="fas fa-times"></i>
+                            <span>Premium support</span>
+                        </div>
+                        <div class="feature disabled">
+                            <i class="fas fa-times"></i>
+                            <span>Custom themes</span>
+                        </div>
+                    </div>
+                    <button class="plan-select-btn">Select Plan</button>
+                </div>
+
+                <div class="plan featured" data-plan="premium">
+                    <div class="plan-badge">Best Value</div>
+                    <div class="plan-header">
+                        <h2>Premium</h2>
+                        <div class="plan-price">
+                            <span class="currency">$</span>
+                            <span class="amount">19</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Unlimited posts</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Advanced analytics</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Ad-free experience</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Premium support</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Custom themes</span>
+                        </div>
+                    </div>
+                    <button class="plan-select-btn">Select Plan</button>
+                </div>
+
+                <div class="plan" data-plan="business">
+                    <div class="plan-badge">Enterprise</div>
+                    <div class="plan-header">
+                        <h2>Business</h2>
+                        <div class="plan-price">
+                            <span class="currency">$</span>
+                            <span class="amount">49</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Unlimited everything</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Business analytics</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Ad-free experience</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>24/7 Priority support</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>White label option</span>
+                        </div>
+                    </div>
+                    <button class="plan-select-btn">Select Plan</button>
+                </div>
+            </div>
+
+            <!-- Payment Form -->
+            <div class="payment-form-container" id="payment-form-container">
+                <div class="payment-form-header">
+                    <h2>Payment Details</h2>
+                    <p>Complete your purchase securely</p>
+                </div>
+
+                <div class="payment-form">
+                    <div class="form-section">
+                        <h3>Billing Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullname">Full Name</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="fullname" placeholder="John Doe">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="email" placeholder="john@example.com">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-home"></i>
+                                    <input type="text" id="address" placeholder="123 Main St">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-city"></i>
+                                    <input type="text" id="city" placeholder="New York">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="zip">ZIP Code</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <input type="text" id="zip" placeholder="10001">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Payment Method</h3>
+                        <div class="payment-methods">
+                            <div class="payment-method active" data-method="card">
+                                <i class="fas fa-credit-card"></i>
+                                <span>Credit Card</span>
+                            </div>
+                            <div class="payment-method" data-method="paypal">
+                                <i class="fab fa-paypal"></i>
+                                <span>PayPal</span>
+                            </div>
+                            <div class="payment-method" data-method="bank">
+                                <i class="fas fa-university"></i>
+                                <span>Bank Transfer</span>
+                            </div>
+                        </div>
+
+                        <div class="card-details" id="card-payment-method">
+                            <div class="credit-card">
+                                <div class="card-front">
+                                    <div class="card-type">
+                                        <i class="fab fa-cc-visa"></i>
+                                    </div>
+                                    <div class="card-number" id="card-number-display">•••• •••• •••• ••••</div>
+                                    <div class="card-info">
+                                        <div class="card-holder">
+                                            <span class="label">Card Holder</span>
+                                            <span class="value" id="card-holder-display">YOUR NAME</span>
+                                        </div>
+                                        <div class="card-expires">
+                                            <span class="label">Expires</span>
+                                            <span class="value" id="card-expires-display">MM/YY</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <div class="card-stripe"></div>
+                                    <div class="card-cvv">
+                                        <span class="label">CVV</span>
+                                        <span class="value" id="card-cvv-display">•••</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group full-width">
+                                    <label for="card-number">Card Number</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-credit-card"></i>
+                                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456"
+                                            maxlength="19">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="card-holder">Card Holder</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" id="card-holder" placeholder="John Doe">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="card-expiry">Expiry Date</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="card-cvv">CVV</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="text" id="card-cvv" placeholder="123" maxlength="3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="paypal-details" id="paypal-payment-method">
+                            <div class="paypal-info">
+                                <i class="fab fa-paypal paypal-icon"></i>
+                                <p>You will be redirected to PayPal to complete your payment securely.</p>
+                            </div>
+                        </div>
+
+                        <div class="bank-details" id="bank-payment-method">
+                            <div class="bank-info">
+                                <i class="fas fa-university bank-icon"></i>
+                                <p>Please use the following details to make a bank transfer:</p>
+                                <div class="bank-details-info">
+                                    <p><strong>Bank Name:</strong> Global Bank</p>
+                                    <p><strong>Account Name:</strong> Your Company Name</p>
+                                    <p><strong>Account Number:</strong> 1234567890</p>
+                                    <p><strong>Routing Number:</strong> 987654321</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Order Summary</h3>
+                        <div class="order-summary">
+                            <div class="summary-item">
+                                <span class="item-name">Premium Plan</span>
+                                <span class="item-price">$19.00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="item-name">Tax</span>
+                                <span class="item-price">$1.90</span>
+                            </div>
+                            <div class="summary-total">
+                                <span class="total-label">Total</span>
+                                <span class="total-price">$20.90</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="back-btn" id="back-to-plans-btn">Back to Plans</button>
+                            <button class="pay-btn" id="complete-payment-btn">
+                                <span class="btn-text">Complete Payment</span>
+                                <i class="fas fa-lock"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay for when sidebar is open on mobile -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content success-modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Payment Successful!</h2>
+            <p>Thank you for your purchase. Your premium plan is now active.</p>
+            <div class="success-details">
+                <p><strong>Transaction ID:</strong> <span id="transaction-id">TRX123456789</span></p>
+                <p><strong>Amount:</strong> <span id="payment-amount">$20.90</span></p>
+                <p><strong>Date:</strong> <span id="payment-date">May 3, 2025</span></p>
+            </div>
+            <button class="success-btn" id="success-btn">Continue to Dashboard</button>
+        </div>
+    </div>
+
+    <!-- Notification Element -->
+    <div class="notification" id="notification"></div>
+
+
+    <script src="../js/plans.js"></script>
+</body>
+
+</html>
