@@ -99,6 +99,12 @@ document.addEventListener('DOMContentLoaded', function () {
     if (loginForm) {
         loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
+
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
@@ -113,18 +119,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert("You have logged in successfully");
                     document.getElementById('email').value = '';
                     document.getElementById('password').value = '';
-                    const email = response.data.email;
-                    if (emailSpan) {
-                        emailSpan.textContent = email;
-                    }
-                    SetupUI();
 
+                    if (emailSpan) {
+                        emailSpan.textContent = response.data.email;
+                    }
+
+                    SetupUI();
                 })
                 .catch((error) => {
                     alert("Login failed: " + (error.response ? error.response.data : error.message));
+                })
+                .finally(() => {
+                    // Revert button state regardless of success or error
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
                 });
         });
     }
+
 
     // Setup UI based on login status
     function SetupUI() {

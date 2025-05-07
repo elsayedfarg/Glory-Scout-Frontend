@@ -803,3 +803,7 @@ footer {
     background-color: var(--primary-color);
     color: black;
 }
+
+.hidden {
+    display: none !important;
+}

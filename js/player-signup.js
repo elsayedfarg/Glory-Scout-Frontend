@@ -288,7 +288,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function SetupUI() {
         const token = localStorage.getItem("token");
 
-        // Always re-fetch buttons in case DOM changed
         const loginBtn = document.getElementById("loginBtn");
         const signupBtn = document.getElementById("signupBtn");
         const logoutBtn = document.getElementById("logoutBtn");
@@ -296,30 +295,39 @@ document.addEventListener("DOMContentLoaded", function () {
         if (token) {
             if (loginBtn) loginBtn.classList.add('hidden');
             if (signupBtn) signupBtn.classList.add('hidden');
-            if (logoutBtn) {
-                logoutBtn.classList.remove('hidden');
-                logoutBtn.style.display = 'inline-block'; // <-- Show it explicitly
-            }
+            if (logoutBtn) logoutBtn.classList.remove('hidden');
         } else {
             if (loginBtn) loginBtn.classList.remove('hidden');
             if (signupBtn) signupBtn.classList.remove('hidden');
-            if (logoutBtn) {
-                logoutBtn.classList.add('hidden');
-                logoutBtn.style.display = 'none'; // <-- Hide it explicitly
-            }
+            if (logoutBtn) logoutBtn.classList.add('hidden');
         }
 
-        // Update mobile buttons
         const mobileAuth = document.getElementById("mobileAuth");
         if (mobileAuth) {
             mobileAuth.innerHTML = token
                 ? `<a href="#" id="mobileLogoutBtn" class="logout-btn">Logout</a>`
                 : `
-                        <a href="./login.html" class="mobile-login-btn">Login</a>
-                        <a href="./create-account.html" class="mobile-signup-btn">Sign Up</a>
-                    `;
+                    <a href="./login.html" class="mobile-login-btn">Login</a>
+                `;
         }
     }
+    // Logout logic
+    function logout() {
+        localStorage.removeItem("token");
+        alert("Logged out successfully");
+        const emailSpan = document.getElementById('contactEmail');
+        if (emailSpan) {
+            emailSpan.textContent = '';
+        }
+        SetupUI();
+    }
+
+    // Bind logout
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", logout);
+    }
+
     SetupUI();
 
 
