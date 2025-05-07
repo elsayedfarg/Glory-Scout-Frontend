@@ -1,3 +1,4 @@
+import { initTestimonialSlider } from './Common/Testimonial-Slider.js';
 document.addEventListener("DOMContentLoaded", function () {
     // Password Toggle
     const togglePasswordButtons = document.querySelectorAll(".toggle-password");
@@ -329,74 +330,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     SetupUI();
-
-
-    // Testimonial Slider
-    const testimonialCards = document.querySelector(".testimonial-cards");
-    const prevBtn = document.querySelector(".slider-arrow.prev");
-    const nextBtn = document.querySelector(".slider-arrow.next");
-
-    if (testimonialCards && prevBtn && nextBtn) {
-        let currentIndex = 0;
-        const cloneCards = () => {
-            const cards = document.querySelectorAll(".testimonial-card");
-            cards.forEach(card => {
-                const clone = card.cloneNode(true);
-                testimonialCards.appendChild(clone);
-            });
-        };
-        cloneCards();
-
-        const initSlider = () => {
-            const cards = document.querySelectorAll(".testimonial-card");
-            const cardWidth = 100 / cards.length;
-            cards.forEach(card => {
-                card.style.flex = `0 0 ${cardWidth}%`;
-            });
-            testimonialCards.style.width = `${cards.length * 100}%`;
-        };
-        initSlider();
-
-        const moveToSlide = (index) => {
-            const cards = document.querySelectorAll(".testimonial-card");
-            const cardWidth = 100 / cards.length;
-            testimonialCards.style.transform = `translateX(-${index * cardWidth}%)`;
-            currentIndex = index;
-        };
-
-        nextBtn.addEventListener("click", () => {
-            const cards = document.querySelectorAll(".testimonial-card");
-            if (currentIndex === cards.length - 1) {
-                testimonialCards.style.transition = "none";
-                moveToSlide(0);
-                setTimeout(() => {
-                    testimonialCards.style.transition = "transform 0.5s ease";
-                }, 10);
-            } else {
-                moveToSlide(currentIndex + 1);
-            }
-        });
-
-        prevBtn.addEventListener("click", () => {
-            const cards = document.querySelectorAll(".testimonial-card");
-            if (currentIndex === 0) {
-                testimonialCards.style.transition = "none";
-                moveToSlide(cards.length - 1);
-                setTimeout(() => {
-                    testimonialCards.style.transition = "transform 0.5s ease";
-                }, 10);
-            } else {
-                moveToSlide(currentIndex - 1);
-            }
-        });
-
-        const tabBtns = document.querySelectorAll(".tab-btn");
-        tabBtns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                tabBtns.forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                moveToSlide(0);
-            });
-        });
-    }
+    initTestimonialSlider({
+        defaultActiveTab: 1
+    });
 });

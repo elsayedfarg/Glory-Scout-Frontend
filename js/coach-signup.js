@@ -1,3 +1,4 @@
+import { initTestimonialSlider } from "./Common/Testimonial-Slider.js";
 document.addEventListener('DOMContentLoaded', function () {
     // Password Toggle
     const togglePasswordButtons = document.querySelectorAll('.toggle-password');
@@ -40,68 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             document.querySelector('.mobile-menu').classList.add('active');
         });
-    }
-
-    // Testimonial Slider
-    const testimonialCards = document.querySelector('.testimonial-cards');
-    const prevBtn = document.querySelector('.slider-arrow.prev');
-    const nextBtn = document.querySelector('.slider-arrow.next');
-
-    let currentIndex = 0;
-
-    if (testimonialCards && prevBtn && nextBtn) {
-        const cloneCards = () => {
-            const cards = document.querySelectorAll('.testimonial-card');
-            cards.forEach(card => {
-                const clone = card.cloneNode(true);
-                testimonialCards.appendChild(clone);
-            });
-        };
-
-        const initSlider = () => {
-            const cards = document.querySelectorAll('.testimonial-card');
-            const cardWidth = 100 / cards.length;
-            cards.forEach(card => {
-                card.style.flex = `0 0 ${cardWidth}%`;
-            });
-            testimonialCards.style.width = `${cards.length * 100}%`;
-        };
-
-        const moveToSlide = (index) => {
-            const cards = document.querySelectorAll('.testimonial-card');
-            const cardWidth = 100 / cards.length;
-            testimonialCards.style.transform = `translateX(-${index * cardWidth}%)`;
-            currentIndex = index;
-        };
-
-        nextBtn.addEventListener('click', () => {
-            const cards = document.querySelectorAll('.testimonial-card');
-            if (currentIndex >= cards.length - 1) {
-                testimonialCards.style.transition = 'none';
-                moveToSlide(0);
-                setTimeout(() => {
-                    testimonialCards.style.transition = 'transform 0.5s ease';
-                }, 10);
-            } else {
-                moveToSlide(currentIndex + 1);
-            }
-        });
-
-        prevBtn.addEventListener('click', () => {
-            const cards = document.querySelectorAll('.testimonial-card');
-            if (currentIndex <= 0) {
-                testimonialCards.style.transition = 'none';
-                moveToSlide(cards.length - 1);
-                setTimeout(() => {
-                    testimonialCards.style.transition = 'transform 0.5s ease';
-                }, 10);
-            } else {
-                moveToSlide(currentIndex - 1);
-            }
-        });
-
-        cloneCards();
-        initSlider();
     }
 
     // Tab Buttons
@@ -188,8 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
             </nav>
 
             <div class="mobile-auth-buttons">
-                <a href="#" class="mobile-coach-btn">For Coaches</a>
-                <a href="#" class="mobile-player-btn">For Players</a>
                 <a href="index.html" class="mobile-login-btn">Login</a>
             </div>
         `;
@@ -201,4 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
             mobileMenu.classList.remove('active');
         });
     }
+    initTestimonialSlider({
+        defaultActiveTab: 2
+    });
 });
