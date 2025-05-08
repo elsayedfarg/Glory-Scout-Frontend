@@ -1,103 +1,58 @@
 import { initTestimonialSlider } from './Common/Testimonial-Slider.js';
+import { createMobileMenu } from './Common/Mobile-Menu.js';
+import { logout } from './Common/Logout.js';
+import { SetupUI } from './Common/SetupUI.js';
+import { MobileMenuToggle } from './Common/Mobile-Menu-Toggle.js';
+
 document.addEventListener("DOMContentLoaded", function () {
-    // Password Toggle
-    const togglePasswordButtons = document.querySelectorAll(".toggle-password");
-    togglePasswordButtons.forEach(button => {
+    // ========== Password Toggle ==========
+    document.querySelectorAll(".toggle-password").forEach(button => {
         button.addEventListener("click", function () {
-            const passwordInput = this.previousElementSibling;
-            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-            passwordInput.setAttribute("type", type);
+            const input = this.previousElementSibling;
+            const type = input.type === "password" ? "text" : "password";
+            input.type = type;
             this.classList.toggle("fa-eye");
             this.classList.toggle("fa-eye-slash");
         });
     });
 
-    // Password Requirements
-    const passwordInput = document.getElementById("password");
-    const passwordRequirements = document.querySelector(".password-requirements");
-    const lengthReq = document.getElementById("length");
-    const uppercaseReq = document.getElementById("uppercase");
-    const lowercaseReq = document.getElementById("lowercase");
-    const numberReq = document.getElementById("number");
-    const specialReq = document.getElementById("special");
-
-    if (passwordInput && passwordRequirements) {
-        passwordInput.addEventListener("focus", function () {
-            passwordRequirements.style.display = "block";
-        });
-
-        passwordRequirements.addEventListener("click", function (e) {
-            e.stopPropagation();
-        });
-
-        document.addEventListener("click", function (e) {
-            if (e.target !== passwordInput && !passwordRequirements.contains(e.target)) {
-                passwordRequirements.style.display = "none";
-            }
-        });
-
-        passwordInput.addEventListener("input", function () {
-            passwordRequirements.style.display = "block";
-            const value = this.value;
-            lengthReq.classList.toggle("valid", value.length >= 8);
-            uppercaseReq.classList.toggle("valid", /[A-Z]/.test(value));
-            lowercaseReq.classList.toggle("valid", /[a-z]/.test(value));
-            numberReq.classList.toggle("valid", /[0-9]/.test(value));
-            specialReq.classList.toggle("valid", /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value));
-        });
-    }
-
-    // File Upload and Image Preview
+    // ========== Image Upload Preview ==========
     const fileInput = document.getElementById("profileImage");
     const fileNameDisplay = fileInput?.nextElementSibling;
 
-    if (fileInput) {
-        fileInput.addEventListener("change", function () {
-            if (this.files.length > 0) {
-                const file = this.files[0];
-                fileNameDisplay.textContent = file.name;
-
-                if (file.type.startsWith("image/")) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        let preview = document.querySelector(".image-preview");
-                        if (!preview) {
-                            preview = document.createElement("img");
-                            preview.className = "image-preview";
-                            preview.style.maxWidth = "200px";
-                            preview.style.maxHeight = "200px";
-                            preview.style.marginTop = "10px";
-                            preview.style.borderRadius = "4px";
-                            fileInput.parentNode.appendChild(preview);
-                        }
-                        preview.src = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            } else {
-                fileNameDisplay.textContent = "No File Chosen";
-                const preview = document.querySelector(".image-preview");
-                if (preview) preview.remove();
+    fileInput?.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+            fileNameDisplay.textContent = file.name;
+            if (file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    let preview = document.querySelector(".image-preview");
+                    if (!preview) {
+                        preview = document.createElement("img");
+                        preview.className = "image-preview";
+                        preview.style.maxWidth = "200px";
+                        preview.style.marginTop = "10px";
+                        preview.style.borderRadius = "4px";
+                        fileInput.parentNode.appendChild(preview);
+                    }
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
             }
-        });
-    }
+        } else {
+            fileNameDisplay.textContent = "No File Chosen";
+            document.querySelector(".image-preview")?.remove();
+        }
+    });
 
-    // Mobile Menu Toggle
-    const menuToggle = document.querySelector(".menu-toggle");
-    if (menuToggle) {
-        menuToggle.addEventListener("click", function () {
-            if (!document.querySelector(".mobile-menu")) createMobileMenu();
-            document.querySelector(".mobile-menu").classList.add("active");
-        });
-    }
-
-    // Form validation and submission
+    // ========== Form Submission ==========
     const signupForm = document.getElementById("signupForm");
     if (signupForm) {
         signupForm.addEventListener("submit", async function (e) {
             e.preventDefault();
 
-            const formElements = {
+            const fields = {
                 username: document.getElementById("username"),
                 email: document.getElementById("email"),
                 phone: document.getElementById("phone"),
@@ -110,76 +65,85 @@ document.addEventListener("DOMContentLoaded", function () {
                 profileImage: document.getElementById("profileImage")
             };
 
+            // Clear old error styles/messages
+            document.querySelectorAll(".error-message").forEach(el => el.remove());
+            Object.values(fields).forEach(f => f.classList.remove("input-error"));
+
+            const getValue = (f) => f?.value?.trim();
             const values = {
-                username: formElements.username.value.trim(),
-                email: formElements.email.value.trim(),
-                phone: formElements.phone.value.trim(),
-                password: formElements.password.value,
-                confirmPassword: formElements.confirmPassword.value,
-                age: parseInt(formElements.age.value),
-                height: parseInt(formElements.height.value),
-                weight: parseInt(formElements.weight.value),
-                position: formElements.position.value.trim(),
-                profileImage: formElements.profileImage.files[0]
+                username: getValue(fields.username),
+                email: getValue(fields.email),
+                phone: getValue(fields.phone),
+                password: fields.password.value,
+                confirmPassword: fields.confirmPassword.value,
+                age: parseInt(fields.age.value),
+                height: parseInt(fields.height.value),
+                weight: parseInt(fields.weight.value),
+                position: getValue(fields.position),
+                profileImage: fields.profileImage.files[0]
             };
 
-            const errors = [];
+            const showError = (field, message) => {
+                alert(message);
+            };
 
-            if (!values.username) errors.push("Username is required");
-            if (!values.email) errors.push("Email is required");
-            if (!values.phone) errors.push("Phone number is required");
-            if (!values.password) errors.push("Password is required");
-            if (!values.confirmPassword) errors.push("Confirm Password is required");
-            if (isNaN(values.age)) errors.push("Age is required");
-            if (isNaN(values.height)) errors.push("Height is required");
-            if (isNaN(values.weight)) errors.push("Weight is required");
-            if (!values.position) errors.push("Position is required");
-            if (!values.profileImage) errors.push("Profile image is required");
+            let hasError = false;
 
-            if (values.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-                errors.push("Please enter a valid email address");
-            }
+            if (!values.username) { alert("Username is required"); hasError = true; }
+            if (!values.email) { alert("Email is required"); hasError = true; }
+            else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) { showError(fields.email, "Invalid email format"); hasError = true; }
 
-            if (values.phone && !/^[0-9]{10,15}$/.test(values.phone)) {
-                errors.push("Phone number must be 10-15 digits");
-            }
+            if (!values.phone) { showError(fields.phone, "Phone number is required"); hasError = true; }
+            else if (!/^[0-9]{10,15}$/.test(values.phone)) { showError(fields.phone, "Phone number must be 10–15 digits"); hasError = true; }
 
-            if (values.password && values.password !== values.confirmPassword) {
-                errors.push("Passwords do not match");
-            }
-
-            if (values.password) {
-                const requirements = [];
-                if (values.password.length < 8) requirements.push("8+ characters");
-                if (!/[A-Z]/.test(values.password)) requirements.push("1 uppercase letter");
-                if (!/[a-z]/.test(values.password)) requirements.push("1 lowercase letter");
-                if (!/[0-9]/.test(values.password)) requirements.push("1 number");
-                if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(values.password)) requirements.push("1 special character");
-                if (requirements.length > 0) {
-                    errors.push(`Password needs: ${requirements.join(", ")}`);
+            if (!values.password) { showError(fields.password, "Password is required"); hasError = true; }
+            else {
+                const pwErrors = [];
+                if (values.password.length < 8) pwErrors.push("8+ characters");
+                if (!/[A-Z]/.test(values.password)) pwErrors.push("1 uppercase");
+                if (!/[a-z]/.test(values.password)) pwErrors.push("1 lowercase");
+                if (!/[0-9]/.test(values.password)) pwErrors.push("1 number");
+                if (!/[!@#$%^&*]/.test(values.password)) pwErrors.push("1 special char");
+                if (pwErrors.length > 0) {
+                    showError(fields.password, `Password must have: ${pwErrors.join(", ")}`);
+                    hasError = true;
                 }
             }
 
-            if (values.age && (values.age < 10 || values.age > 50)) {
-                errors.push("Age must be between 10-50");
+            if (!values.confirmPassword) {
+                showError(fields.confirmPassword, "Confirm your password");
+                hasError = true;
+            } else if (values.password !== values.confirmPassword) {
+                showError(fields.confirmPassword, "Passwords do not match");
+                hasError = true;
             }
 
-            if (values.height && (values.height < 120 || values.height > 220)) {
-                errors.push("Height must be between 120-220 cm");
+            if (isNaN(values.age) || values.age < 10 || values.age > 50) {
+                alert("Age must be between 10–50");
+                hasError = true;
             }
 
-            if (values.weight && (values.weight < 30 || values.weight > 150)) {
-                errors.push("Weight must be between 30-150 kg");
+            if (isNaN(values.height) || values.height < 120 || values.height > 220) {
+                showError(fields.height, "Height must be 120–220 cm");
+                hasError = true;
             }
 
-            if (values.profileImage && !values.profileImage.type.startsWith("image/")) {
-                errors.push("Profile image must be an image file (JPEG, PNG, etc.)");
+            if (isNaN(values.weight) || values.weight < 30 || values.weight > 150) {
+                alert("Weight must be 30–150 kg");
+                hasError = true;
             }
 
-            if (errors.length > 0) {
-                alert("Please fix the following errors:\n\n" + errors.join("\n"));
-                return;
+            if (!values.position) {
+                showError(fields.position, "Position is required");
+                hasError = true;
             }
+
+            if (!values.profileImage || !values.profileImage.type.startsWith("image/")) {
+                showError(fields.profileImage, "Upload a valid image file");
+                hasError = true;
+            }
+
+            if (hasError) return;
 
             const formData = new FormData();
             formData.append("UserName", values.username);
@@ -192,145 +156,51 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("Position", values.position);
             formData.append("profilePhoto", values.profileImage);
 
-            const submitBtn = document.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
+            const submitBtn = signupForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
 
             try {
-                const response = await axios.post("http://glory-scout.tryasp.net/api/Auth/register-player", formData, {
+                const res = await axios.post("http://glory-scout.tryasp.net/api/Auth/register-player", formData, {
                     headers: { "Content-Type": "multipart/form-data" }
                 });
 
-                const token = response.data.token;
-                if (token) {
-                    localStorage.setItem("token", token);
-                }
+                const token = res.data.token;
+                if (token) localStorage.setItem("token", token);
+                localStorage.setItem("role", res.data.role);
 
-                alert("Registration successful! Redirecting...");
+                alert("Registration successful!");
                 window.location.href = "./player-home.html";
             } catch (error) {
-                let errorMsg = "Registration failed. Please try again.";
                 if (error.response) {
-                    console.log(error.response);  // Log full error for debugging
-                    if (error.response.data?.errors) {
-                        errorMsg = "Validation Errors: \n" + Object.values(error.response.data.errors).join('\n');
-                    } else if (error.response.data?.message) {
-                        errorMsg = error.response.data.message;
+                    const { data } = error.response;
+
+                    if (data.errors) {
+                        const errors = data.errors;
+                        Object.entries(errors).forEach(([key, messages]) => {
+                            alert(`${key}: ${messages.join(" ")}`);
+                        });
+
+                    } else if (data.message) {
+                        alert(data.message);
+                    } else {
+                        alert("Username and email must be unique (must not be used before)");
                     }
-                } else if (error.request) {
-                    errorMsg = "No response from server. Please check your network connection.";
                 } else {
-                    errorMsg = "An unexpected error occurred. Please try again.";
+                    alert("Network error or server not reachable.");
                 }
-                alert(errorMsg);
+
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
+                submitBtn.innerHTML = originalText;
             }
         });
     }
 
-
-    // Create mobile menu
-    function createMobileMenu() {
-        const mobileMenu = document.createElement('div');
-        mobileMenu.className = 'mobile-menu';
-
-        mobileMenu.innerHTML = `
-            <div class="mobile-menu-header">
-                <div class="logo">
-                    <img src="../images/Frame 38.png" alt="Glory Scout">
-                </div>
-                <button class="mobile-menu-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <nav class="mobile-nav-links">
-                <a href="./index.html" class="active">Home</a>
-                <a href="./player-home.html">Players</a>
-                <a href="./coach-home.html">Coaches</a>
-                <a href="./about-us.html">About Us</a>
-            </nav>
-
-            <div class="mobile-auth-buttons" id="mobileAuth">
-            </div>
-        `;
-
-        document.body.appendChild(mobileMenu);
-
-        const closeBtn = mobileMenu.querySelector('.mobile-menu-close');
-        closeBtn.addEventListener('click', function () {
-            mobileMenu.classList.remove('active');
-        });
-
-        const mobileAuth = document.getElementById("mobileAuth");
-        const token = localStorage.getItem("token");
-        mobileAuth.innerHTML = token ? `
-                <a href="#" id="mobileLogoutBtn" class="logout-btn">Logout</a>
-            ` : `
-                <a href="./login.html" class="mobile-login-btn">Login</a>
-            `;
-
-        SetupUI();
-
-
-        const mobileLogoutBtn = document.getElementById("mobileLogoutBtn");
-        if (mobileLogoutBtn) {
-            mobileLogoutBtn.addEventListener('click', function () {
-                logout();
-                mobileMenu.classList.remove('active');
-            });
-        }
-    }
-
-    // Setup UI based on login status
-    function SetupUI() {
-        const token = localStorage.getItem("token");
-
-        const loginBtn = document.getElementById("loginBtn");
-        const signupBtn = document.getElementById("signupBtn");
-        const logoutBtn = document.getElementById("logoutBtn");
-
-        if (token) {
-            if (loginBtn) loginBtn.classList.add('hidden');
-            if (signupBtn) signupBtn.classList.add('hidden');
-            if (logoutBtn) logoutBtn.classList.remove('hidden');
-        } else {
-            if (loginBtn) loginBtn.classList.remove('hidden');
-            if (signupBtn) signupBtn.classList.remove('hidden');
-            if (logoutBtn) logoutBtn.classList.add('hidden');
-        }
-
-        const mobileAuth = document.getElementById("mobileAuth");
-        if (mobileAuth) {
-            mobileAuth.innerHTML = token
-                ? `<a href="#" id="mobileLogoutBtn" class="logout-btn">Logout</a>`
-                : `
-                    <a href="./login.html" class="mobile-login-btn">Login</a>
-                `;
-        }
-    }
-    // Logout logic
-    function logout() {
-        localStorage.removeItem("token");
-        alert("Logged out successfully");
-        const emailSpan = document.getElementById('contactEmail');
-        if (emailSpan) {
-            emailSpan.textContent = '';
-        }
-        SetupUI();
-    }
-
-    // Bind logout
-    const logoutBtn = document.getElementById("logoutBtn");
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", logout);
-    }
-
+    MobileMenuToggle();
+    createMobileMenu("login");
     SetupUI();
-    initTestimonialSlider({
-        defaultActiveTab: 1
-    });
+    document.getElementById("logoutBtn")?.addEventListener("click", logout);
+    initTestimonialSlider({ defaultActiveTab: 1 });
 });

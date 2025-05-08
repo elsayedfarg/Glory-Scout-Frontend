@@ -642,11 +642,12 @@ footer {
 }
 
 .error-message {
-    color: var(--error-color);
-    font-size: 12px;
-    margin-top: 5px;
-    display: none;
+    display: block !important;
+    color: red !important;
+    font-size: 14px !important;
+    margin-top: 5px !important;
 }
+
 
 .error-message.visible {
     display: block;
@@ -806,4 +807,8 @@ footer {
 
 .hidden {
     display: none !important;
+}
+
+.input-error {
+    border: 1px solid red;
 }

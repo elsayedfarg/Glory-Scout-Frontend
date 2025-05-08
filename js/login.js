@@ -3,6 +3,7 @@ import { initTestimonialSlider } from './Common/Testimonial-Slider.js';
 import { createMobileMenu } from './Common/Mobile-Menu.js';
 import { SetupUI } from './Common/SetupUI.js';
 import { MobileMenuToggle } from './Common/Mobile-Menu-Toggle.js';
+import { logout } from './Common/Logout.js';
 
 document.addEventListener('DOMContentLoaded', function () {
     // Password Toggle
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then((response) => {
                     localStorage.setItem("token", response.data.token);
+                    localStorage.setItem("role", response.data.role);
                     alert("You have logged in successfully");
                     document.getElementById('email').value = '';
                     document.getElementById('password').value = '';
@@ -66,25 +68,12 @@ document.addEventListener('DOMContentLoaded', function () {
         logoutBtn.addEventListener("click", logout);
     }
 
-
     createMobileMenu("signup");
     SetupUI();
+    document.getElementById("logoutBtn")?.addEventListener("click", logout);
 
     initTestimonialSlider({
         defaultActiveTab: 0
     });
 });
 
-export function logout() {
-    localStorage.removeItem("token");
-    alert("Logged out successfully");
-
-    const emailSpan = document.getElementById('contactEmail');
-    if (emailSpan) {
-        emailSpan.textContent = '';
-    }
-
-    // Update the UI for both mobile and main menus after logout
-    SetupUI();
-    createMobileMenu("signup");  // Refresh mobile menu after logout
-}

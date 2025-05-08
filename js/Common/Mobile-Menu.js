@@ -1,16 +1,14 @@
-// Inside Mobile-Menu.js
-
-import { logout } from "../login.js";
+import { logout } from "./Logout.js";
 import { SetupUI } from "./SetupUI.js";
 
 export function createMobileMenu(type = null) {
-    // Check if the mobile menu already exists and remove it
+    // Remove existing mobile menu if any
     const existingMenu = document.querySelector('.mobile-menu');
     if (existingMenu) {
         existingMenu.remove();
     }
 
-    // Create a new mobile menu
+    // Create mobile menu wrapper
     const mobileMenu = document.createElement('div');
     mobileMenu.className = 'mobile-menu';
 
@@ -25,7 +23,7 @@ export function createMobileMenu(type = null) {
         </div>
 
         <nav class="mobile-nav-links">
-            <a href="./index.html" class="active">Home</a>
+            <a href="./index.html">Home</a>
             <a href="./player-home.html">Players</a>
             <a href="./coach-home.html">Coaches</a>
             <a href="./about-us.html">About Us</a>
@@ -36,6 +34,7 @@ export function createMobileMenu(type = null) {
 
     document.body.appendChild(mobileMenu);
 
+    // Close button handler
     const closeBtn = mobileMenu.querySelector('.mobile-menu-close');
     closeBtn.addEventListener('click', () => {
         mobileMenu.classList.remove('active');
@@ -44,26 +43,27 @@ export function createMobileMenu(type = null) {
     const mobileAuth = document.getElementById("mobileAuth");
     const token = localStorage.getItem("token");
 
-    // Update the auth button based on the login state
     if (token) {
+        // Show logout if token exists
         mobileAuth.innerHTML = `<a href="#" id="mobileLogoutBtn" class="logout-btn">Logout</a>`;
     } else {
-        if (type === 'login') {
-            mobileAuth.innerHTML = `<a href="./login.html" class="mobile-signup-btn">Login</a>`;
-        } else if (type === 'signup') {
+        // Show login or signup depending on page
+        if (type === "login") {
+            mobileAuth.innerHTML = `<a href="./login.html" class="mobile-login-btn">Login</a>`;
+        } else {
             mobileAuth.innerHTML = `<a href="./create-account.html" class="mobile-signup-btn">Sign Up</a>`;
         }
     }
 
-    if (!token) SetupUI(); // Ensure main UI is updated if no token
-
-    // Attach logout functionality to the mobile logout button
+    // Attach logout logic
     const mobileLogoutBtn = document.getElementById("mobileLogoutBtn");
     if (mobileLogoutBtn) {
         mobileLogoutBtn.addEventListener('click', () => {
             logout();
             mobileMenu.classList.remove('active');
-            createMobileMenu("signup"); // Recreate mobile menu after logout
         });
     }
+
+    // Optional: Refresh main UI elements
+    SetupUI();
 }
