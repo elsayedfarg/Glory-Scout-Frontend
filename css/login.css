@@ -111,23 +111,6 @@ button {
     cursor: pointer;
 }
 
-/* Logout Button */
-.logout-btn {
-    background-color: #dc3545;
-    color: white;
-    border: 2px solid #dc3545;
-    padding: 10px 20px;
-    border-radius: 50px;
-    font-weight: 600;
-    transition: background-color 0.3s;
-}
-
-.logout-btn:hover {
-    background-color: #c82333;
-    border-color: #c82333;
-}
-
-
 /* Login Section */
 .login-section {
     display: flex;
@@ -650,8 +633,4 @@ footer {
 .mobile-signup-btn {
     background-color: var(--primary-color);
     color: black;
-}
-
-.hidden {
-    display: none !important;
 }

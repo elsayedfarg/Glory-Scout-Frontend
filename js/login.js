@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('email').value = '';
                     document.getElementById('password').value = '';
 
+                    window.location = localStorage.getItem("role") == "Player" ? "./player-home.html" : "./coach-home.html";
+
                     if (emailSpan) {
                         emailSpan.textContent = response.data.email;
                     }

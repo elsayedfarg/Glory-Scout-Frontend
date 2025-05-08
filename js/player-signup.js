@@ -173,25 +173,36 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Registration successful!");
                 window.location.href = "./player-home.html";
             } catch (error) {
+
                 if (error.response) {
                     const { data } = error.response;
 
-                    if (data.errors) {
+                    if (typeof data === "string") {
+                        alert(data); // Show the plain message like "Email is already registered!"
+                    } else if (data.errors) {
                         const errors = data.errors;
-                        Object.entries(errors).forEach(([key, messages]) => {
-                            alert(`${key}: ${messages.join(" ")}`);
-                        });
-
+                        if (errors.Email && errors.UserName) {
+                            alert(`Email: ${errors.Email.join(" ")}\nUsername: ${errors.UserName.join(" ")}`);
+                        } else if (errors.Email) {
+                            alert(`Email: ${errors.Email.join(" ")}`);
+                        } else if (errors.UserName) {
+                            alert(`Username: ${errors.UserName.join(" ")}`);
+                        } else {
+                            Object.entries(errors).forEach(([key, messages]) => {
+                                alert(`${key}: ${messages.join(" ")}`);
+                            });
+                        }
                     } else if (data.message) {
                         alert(data.message);
                     } else {
-                        alert("Username and email must be unique (must not be used before)");
+                        alert("An unknown error occurred.");
                     }
                 } else {
                     alert("Network error or server not reachable.");
                 }
+            }
 
-            } finally {
+            finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
             }
