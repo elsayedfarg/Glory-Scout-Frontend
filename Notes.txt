@@ -1,4 +1,0 @@
-Add successful and failure login styles in the login page instead of the alert
-
-
-correct (password-requirements div)and its styles inside the player-signup page

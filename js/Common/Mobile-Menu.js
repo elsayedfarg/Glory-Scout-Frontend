@@ -24,8 +24,8 @@ export function createMobileMenu(type = null) {
 
         <nav class="mobile-nav-links">
             <a href="./index.html">Home</a>
-            <a href="./player-home.html">Players</a>
-            <a href="./coach-home.html">Coaches</a>
+            <a href="./player-dashboard.html">Players</a>
+            <a href="./coach-dashboard.html">Coaches</a>
             <a href="./about-us.html">About Us</a>
         </nav>
 
