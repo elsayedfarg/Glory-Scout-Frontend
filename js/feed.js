@@ -9,35 +9,107 @@ let reachedEnd = false;
 
 function formatDate(dateStr) {
     const d = new Date(dateStr);
-    return d.toLocaleString();
+    const now = new Date();
+    const diff = (now - d) / 1000;
+    if (diff < 60) return `${Math.floor(diff)}s ago`;
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    if (diff < 604800) return `${Math.floor(diff / 86400)}d ago`;
+    return d.toLocaleDateString();
 }
 
-function createPostCard(post) {
+function createPostCard(post, commentsPreview = []) {
+    const likesCount = post.likesCount || 0;
+    const commentsCount = post.commentsCount || 0;
+
+    // Get post URL, accounting for API typo (posrUrl vs postUrl)
+    const postImageUrl = post.postUrl || post.posrUrl;
+
+    // Create the post initials if no profile picture
+    const initials = post.username ? post.username.charAt(0).toUpperCase() : '?';
+
     return `
-    <div class="feed-post" data-post-id="${post.id}" data-liked="${post.likedByCurrentUser}">
-      <div class="feed-post-header">
-        <img class="feed-post-avatar" src="${post.userProfilePhoto || 'https://via.placeholder.com/48'}" alt="${post.userName}">
-        <span class="feed-post-user">${post.userName}</span>
-        <span class="feed-post-date">${formatDate(post.createdAt)}</span>
+    <div class="post-card" data-post-id="${post.id}" data-liked="${post.isLikedByCurrentUser}" data-likes-count="${likesCount}">
+      <div class="post-header">
+        <div class="post-avatar">
+          ${post.userProfilePicture
+            ? `<img src="${post.userProfilePicture}" alt="${post.username}" />`
+            : initials}
+        </div>
+        <div class="post-user-info">
+          <div class="post-username">${post.username}</div>
+          ${post.description ? `<div class="post-description">${post.description}</div>` : ''}
+          <div class="post-meta">${post.postNumber ? `${post.postNumber} post` : ''}</div>
+        </div>
       </div>
-      <div class="feed-post-content">${post.content || ''}</div>
-      ${post.imageUrl ? `<img class="feed-post-image" src="${post.imageUrl}" alt="Post image">` : ''}
-      <div class="feed-post-actions">
-        <span class="feed-action like-action${post.likedByCurrentUser ? ' liked' : ''}" data-liked="${post.likedByCurrentUser}">
-          <i class="fas fa-heart icon"></i> <span class="like-count">${post.likesCount}</span>
+      
+      ${postImageUrl ? `
+      <div class="post-media">
+        <img class="post-image" src="${postImageUrl}" alt="Post image">
+      </div>` : ''}
+      
+      ${post.content ? `
+      <div class="post-content">
+        <p>${post.content}</p>
+      </div>` : ''}
+      
+      <div class="post-engagement">
+        <span class="engagement-item">
+          <span class="like-action${post.isLikedByCurrentUser ? ' liked' : ''}">
+            <i class="fa-heart engagement-icon likes-icon ${post.isLikedByCurrentUser ? 'fas' : 'far'}"></i>
+          </span>
+          <span class="likes-count">${likesCount} Likes</span>
         </span>
-        <span class="feed-action comment-action">
-          <i class="fas fa-comment icon"></i> <span class="comment-count">${post.commentsCount}</span>
+        
+        <span class="engagement-item comment-toggle">
+          <i class="far fa-comment engagement-icon comments-icon"></i>
+          <span class="comments-count">${commentsCount} Comments</span>
         </span>
       </div>
-      <div class="feed-comments" style="display:none;"></div>
+      
+      <div class="post-comments">
+        ${commentsPreview.map(c => `
+          <div class="comment-item">
+            <span class="comment-username">${c.userName}:</span>
+            <span class="comment-content">${c.content}</span>
+          </div>
+        `).join('')}
+        
+        <div class="comment-input">
+          <input type="text" placeholder="Add a comment..." />
+          <button class="comment-submit">Post</button>
+        </div>
+      </div>
     </div>
   `;
 }
 
 function renderPosts(posts) {
     posts.forEach(post => {
-        feedGrid.insertAdjacentHTML('beforeend', createPostCard(post));
+        // Log individual post to debug
+        console.log('Processing post:', post.id, post);
+
+        // Fix the typo in the API response (posrUrl vs postUrl)
+        if (post.posrUrl && !post.postUrl) {
+            post.postUrl = post.posrUrl;
+        }
+
+        // Use description as content if no content exists
+        if (!post.content && post.description) {
+            post.content = post.description;
+        }
+
+        // For preview, fetch first 2 comments (optional, can be optimized)
+        api.get(`http://glory-scout.tryasp.net/api/Post/${post.id}/comments?page=1&pageSize=2`).then(res => {
+            const commentsPreview = res.data || [];
+            feedGrid.insertAdjacentHTML('beforeend', createPostCard(post, commentsPreview));
+            // Make sure to attach listeners after adding to DOM
+            attachPostListeners(post.id);
+        }).catch(() => {
+            feedGrid.insertAdjacentHTML('beforeend', createPostCard(post, []));
+            // Make sure to attach listeners after adding to DOM
+            attachPostListeners(post.id);
+        });
     });
 }
 
@@ -51,19 +123,45 @@ async function loadFeed() {
     }
     try {
         const res = await api.get(url);
-        const posts = res.data;
+        const posts = res.data.posts;
+
+        // Debug post data
+        console.log('Feed data:', posts);
+
         if (!posts.length) {
             reachedEnd = true;
             feedLoader.style.display = 'none';
             return;
         }
-        renderPosts(posts);
-        // Update for next page
-        const last = posts[posts.length - 1];
-        lastLikesCount = last.likesCount;
-        lastCreatedAt = last.createdAt;
-        attachPostListeners(posts);
+
+        // Process posts to ensure content shows up
+        const processedPosts = posts.map(post => {
+            // Fix the image URL typo (posrUrl vs postUrl)
+            if (post.posrUrl && !post.postUrl) {
+                post.postUrl = post.posrUrl;
+            }
+
+            // Make sure description becomes content
+            if (!post.content && post.description) {
+                post.content = post.description;
+            }
+
+            // Log processed post
+            console.log('Processed post:', post);
+
+            return post;
+        });
+
+        renderPosts(processedPosts);
+
+        // Update for next page using nextCursor
+        const nextCursor = res.data.nextCursor;
+        if (nextCursor) {
+            lastLikesCount = nextCursor.lastLikesCount;
+            lastCreatedAt = nextCursor.lastCreatedAt;
+        }
     } catch (err) {
+        console.error('Feed loading error:', err);
         feedLoader.innerHTML = '<span style="color:red">Failed to load feed.</span>';
     } finally {
         isLoading = false;
@@ -71,61 +169,124 @@ async function loadFeed() {
     }
 }
 
-function attachPostListeners(posts) {
-    posts.forEach(post => {
-        const postElem = feedGrid.querySelector(`.feed-post[data-post-id="${post.id}"]`);
-        if (!postElem) return;
-        // Like/unlike
-        const likeBtn = postElem.querySelector('.like-action');
-        likeBtn.onclick = async function () {
-            const liked = likeBtn.classList.contains('liked');
-            try {
-                if (!liked) {
-                    await api.post(`http://glory-scout.tryasp.net/api/Post/${post.id}/like`);
-                    likeBtn.classList.add('liked');
-                    likeBtn.querySelector('.like-count').textContent = parseInt(likeBtn.querySelector('.like-count').textContent) + 1;
-                } else {
-                    await api.delete(`http://glory-scout.tryasp.net/api/Post/${post.id}/like`);
-                    likeBtn.classList.remove('liked');
-                    likeBtn.querySelector('.like-count').textContent = Math.max(0, parseInt(likeBtn.querySelector('.like-count').textContent) - 1);
-                }
-            } catch (e) {
-                alert('Failed to update like.');
+function attachPostListeners(postId) {
+    const postElem = feedGrid.querySelector(`.post-card[data-post-id="${postId}"]`);
+    if (!postElem) return;
+
+    // Ensure comments start collapsed
+    const commentsSection = postElem.querySelector('.post-comments');
+    commentsSection.classList.remove('active');
+
+    // Like/unlike
+    const likeBtn = postElem.querySelector('.like-action');
+    const likeIcon = likeBtn.querySelector('.fa-heart');
+    const likeCountElem = postElem.querySelector('.likes-count');
+
+    likeBtn.addEventListener('click', async function () {
+        try {
+            const isLiked = likeBtn.classList.contains('liked');
+
+            if (!isLiked) {
+                // Optimistic UI update
+                likeBtn.classList.add('liked');
+                likeIcon.classList.remove('far');
+                likeIcon.classList.add('fas');
+
+                const currentCount = parseInt(likeCountElem.textContent);
+                likeCountElem.textContent = (currentCount + 1) + ' Likes';
+
+                // API call
+                await api.post(`http://glory-scout.tryasp.net/api/Post/${postId}/like`);
+            } else {
+                // Optimistic UI update
+                likeBtn.classList.remove('liked');
+                likeIcon.classList.remove('fas');
+                likeIcon.classList.add('far');
+
+                const currentCount = parseInt(likeCountElem.textContent);
+                likeCountElem.textContent = Math.max(0, currentCount - 1) + ' Likes';
+
+                // API call
+                await api.delete(`http://glory-scout.tryasp.net/api/Post/${postId}/like`);
             }
-        };
-        // Show comments
-        const commentBtn = postElem.querySelector('.comment-action');
-        const commentsDiv = postElem.querySelector('.feed-comments');
-        let commentsLoaded = false;
-        commentBtn.onclick = async function () {
-            if (commentsDiv.style.display === 'block') {
-                commentsDiv.style.display = 'none';
-                return;
+        } catch (e) {
+            console.error('Failed to update like:', e);
+            // Revert UI changes if API call fails
+            if (likeBtn.classList.contains('liked')) {
+                likeBtn.classList.remove('liked');
+                likeIcon.classList.remove('fas');
+                likeIcon.classList.add('far');
+            } else {
+                likeBtn.classList.add('liked');
+                likeIcon.classList.remove('far');
+                likeIcon.classList.add('fas');
             }
-            commentsDiv.style.display = 'block';
-            if (commentsLoaded) return;
-            commentsDiv.innerHTML = '<span>Loading comments...</span>';
-            try {
-                const res = await api.get(`http://glory-scout.tryasp.net/api/Post/${post.id}/comments?page=1&pageSize=20`);
-                const comments = res.data;
-                if (!comments.length) {
-                    commentsDiv.innerHTML = '<span>No comments yet.</span>';
-                } else {
-                    commentsDiv.innerHTML = comments.map(c => `
-            <div class="feed-comment">
-              <span class="feed-comment-user">${c.userName}</span>
-              <span class="feed-comment-date">${formatDate(c.createdAt)}</span>
-              <div>${c.content}</div>
-            </div>
-          `).join('');
-                }
-                commentsLoaded = true;
-            } catch (e) {
-                commentsDiv.innerHTML = '<span style="color:red">Failed to load comments.</span>';
-            }
-        };
+        }
+    });
+
+    // Comment toggle
+    const commentToggle = postElem.querySelector('.comment-toggle');
+
+    commentToggle.addEventListener('click', function () {
+        commentsSection.classList.toggle('active');
+    });
+
+    // Comment submission
+    const commentForm = postElem.querySelector('.comment-input');
+    const commentInput = commentForm.querySelector('input');
+    const commentSubmit = commentForm.querySelector('.comment-submit');
+
+    commentSubmit.addEventListener('click', async function () {
+        const commentText = commentInput.value.trim();
+        if (!commentText) return;
+
+        try {
+            // Optimistic UI update
+            const commentItem = document.createElement('div');
+            commentItem.className = 'comment-item';
+            commentItem.innerHTML = `
+                <span class="comment-username">You:</span>
+                <span class="comment-content">${commentText}</span>
+            `;
+            commentForm.insertAdjacentElement('beforebegin', commentItem);
+            commentInput.value = '';
+
+            // Update comment count
+            const commentsCountElem = postElem.querySelector('.comments-count');
+            const currentCount = parseInt(commentsCountElem.textContent);
+            commentsCountElem.textContent = (currentCount + 1) + ' Comments';
+
+            // API call
+            await api.post(`http://glory-scout.tryasp.net/api/Post/${postId}/comments`, {
+                content: commentText
+            });
+        } catch (e) {
+            console.error('Failed to post comment:', e);
+            // You could remove the optimistic comment here if the API call fails
+        }
+    });
+
+    // Enter key to submit comment
+    commentInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            commentSubmit.click();
+        }
     });
 }
+
+// Initialize menu toggle functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const sidebarToggle = document.getElementById('menu-toggle');
+    const headerMenuToggle = document.getElementById('header-menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+
+    function toggleSidebar() {
+        sidebar.classList.toggle('active');
+    }
+
+    if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+    if (headerMenuToggle) headerMenuToggle.addEventListener('click', toggleSidebar);
+});
 
 // Infinite scroll
 window.addEventListener('scroll', () => {
@@ -135,4 +296,4 @@ window.addEventListener('scroll', () => {
 });
 
 // Initial load
-loadFeed(); 
+loadFeed();
