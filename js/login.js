@@ -4,6 +4,7 @@ import { createMobileMenu } from './Common/Mobile-Menu.js';
 import { SetupUI } from './Common/SetupUI.js';
 import { MobileMenuToggle } from './Common/Mobile-Menu-Toggle.js';
 import { logout } from './Common/Logout.js';
+import api from './api.js';
 
 document.addEventListener('DOMContentLoaded', function () {
     // Password Toggle
@@ -36,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const BaseURL = "http://glory-scout.tryasp.net/api";
             const emailSpan = document.getElementById('contactEmail');
 
-            axios.post(`${BaseURL}/Auth/login`, { email, password }, {
+            api.post(`${BaseURL}/Auth/login`, { email, password }, {
                 headers: { "Content-Type": "application/json" }
             })
                 .then((response) => {

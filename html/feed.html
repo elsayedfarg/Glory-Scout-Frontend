@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed - Glory Scout Football Academy</title>
+    <link rel="stylesheet" href="../css/player-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar (reuse from player-dashboard if needed) -->
+        <!-- Main Content -->
+        <div class="main-content" id="main-content">
+            <nav class="top-nav">
+                <div class="nav-left">
+                    <div class="menu-toggle" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <div class="top-logo"></div>
+                </div>
+                <div class="main-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="player-dashboard.html">Players</a></li>
+                        <li><a href="coach-dashboard.html">Coaches</a></li>
+                        <li><a href="feed.html" class="active">Feed</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="feed-section">
+                <h1 class="section-title">Feed</h1>
+                <div class="feed-grid" id="feed-grid">
+                    <!-- Posts will be injected here -->
+                </div>
+                <div id="feed-loader" class="feed-loader" style="display:none; text-align:center; margin:2em;">
+                    <span>Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.9.0/axios.min.js"></script>
+    <script type="module" src="../js/feed.js"></script>
+</body>
+
+</html>

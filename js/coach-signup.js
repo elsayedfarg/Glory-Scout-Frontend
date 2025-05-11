@@ -3,6 +3,7 @@ import { createMobileMenu } from "./Common/Mobile-Menu.js";
 import { MobileMenuToggle } from "./Common/Mobile-Menu-Toggle.js"
 import { SetupUI } from "./Common/SetupUI.js";
 import { logout } from "./Common/Logout.js";
+import api from './api.js';
 
 document.addEventListener('DOMContentLoaded', function () {
     // Password Toggle
@@ -128,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
 
             try {
-                const res = await axios.post("http://glory-scout.tryasp.net/api/Auth/register-coach", formData, {
+                const res = await api.post("http://glory-scout.tryasp.net/api/Auth/register-coach", formData, {
                     headers: { "Content-Type": "multipart/form-data" }
                 });
 

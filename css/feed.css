@@ -1,0 +1,132 @@
+/* Feed page styles, based on player-dashboard.css */
+.feed-section {
+    margin-top: 32px;
+}
+
+.feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 32px;
+}
+
+.feed-post {
+    background: #fff;
+    color: #222;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 0 0 16px 0;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+
+.feed-post:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.feed-post-header {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.feed-post-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 16px;
+}
+
+.feed-post-user {
+    font-weight: 600;
+    color: #10b981;
+}
+
+.feed-post-date {
+    color: #888;
+    font-size: 13px;
+    margin-left: 8px;
+}
+
+.feed-post-content {
+    padding: 16px;
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+.feed-post-image {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 8px auto;
+    border-radius: 8px;
+}
+
+.feed-post-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 16px;
+    margin-top: 8px;
+}
+
+.feed-action {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    color: #888;
+    font-size: 1.1em;
+    user-select: none;
+    transition: color 0.2s;
+}
+
+.feed-action.liked {
+    color: #ec4899;
+}
+
+.feed-action .icon {
+    font-size: 1.3em;
+}
+
+.feed-comments {
+    background: #f9f9f9;
+    border-radius: 0 0 12px 12px;
+    padding: 12px 16px;
+    margin-top: 8px;
+}
+
+.feed-comment {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.feed-comment:last-child {
+    border-bottom: none;
+}
+
+.feed-comment-user {
+    font-weight: 600;
+    color: #10b981;
+    margin-right: 8px;
+}
+
+.feed-comment-date {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.feed-loader {
+    color: #10b981;
+    font-size: 1.2em;
+}
+
+@media (max-width: 600px) {
+    .feed-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,14 +1,12 @@
+import api from './api.js';
+
 document.addEventListener("DOMContentLoaded", () => {
   const logoImg = document.querySelector(".logo img");
 
   const BaseURL = "http://glory-scout.tryasp.net/api";
   const token = localStorage.getItem("token");
 
-  axios.get(`${BaseURL}/Auth/user-info`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  api.get(`${BaseURL}/Auth/user-info`)
     .then((response) => {
       if (logoImg && response.data.profilePhoto) {
         logoImg.src = response.data.profilePhoto;
