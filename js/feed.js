@@ -354,6 +354,169 @@ document.addEventListener('DOMContentLoaded', function () {
     const sidebarToggle = document.getElementById('menu-toggle');
     const headerMenuToggle = document.getElementById('header-menu-toggle');
     const sidebar = document.getElementById('sidebar');
+    const createPostInput = document.querySelector('.create-post-input input');
+    const photoBtn = document.querySelector('.create-post-btn:nth-child(1)');
+    const videoBtn = document.querySelector('.create-post-btn:nth-child(2)');
+    const postBtn = document.querySelector('.create-post-btn.primary-btn');
+    let selectedFile = null;
+    let fileInputElement = null;
+
+    // Create a hidden file input element
+    function createFileInput() {
+        if (fileInputElement) {
+            document.body.removeChild(fileInputElement);
+        }
+
+        fileInputElement = document.createElement('input');
+        fileInputElement.type = 'file';
+        fileInputElement.accept = 'image/*';
+        fileInputElement.style.display = 'none';
+        document.body.appendChild(fileInputElement);
+
+        fileInputElement.addEventListener('change', function (e) {
+            if (e.target.files && e.target.files[0]) {
+                selectedFile = e.target.files[0];
+
+                // Update UI to show selected file
+                const fileName = selectedFile.name;
+                createPostInput.value = `Selected image: ${fileName}`;
+
+                // Enable post button
+                postBtn.classList.add('active');
+
+                // Show image preview
+                showImagePreview(selectedFile);
+            }
+        });
+    }
+
+    // Show image preview
+    function showImagePreview(file) {
+        // Remove any existing preview
+        const existingPreview = document.querySelector('.create-post-preview');
+        if (existingPreview) {
+            existingPreview.remove();
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const previewContainer = document.createElement('div');
+            previewContainer.className = 'create-post-preview';
+
+            const previewImage = document.createElement('img');
+            previewImage.src = e.target.result;
+            previewImage.className = 'preview-image';
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-preview';
+            removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            removeBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                previewContainer.remove();
+                selectedFile = null;
+                createPostInput.value = '';
+                postBtn.classList.remove('active');
+            });
+
+            previewContainer.appendChild(previewImage);
+            previewContainer.appendChild(removeBtn);
+
+            const postCard = document.querySelector('.create-post-card');
+            postCard.appendChild(previewContainer);
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    // Initialize file input
+    createFileInput();
+
+    // Photo button click
+    if (photoBtn) {
+        photoBtn.addEventListener('click', function () {
+            fileInputElement.click();
+        });
+    }
+
+    // Post button click
+    if (postBtn) {
+        postBtn.addEventListener('click', async function () {
+            const description = createPostInput.value.trim();
+
+            // Don't allow empty posts without either description or image
+            if (!description && !selectedFile) {
+                alert('Please enter a description or select an image');
+                return;
+            }
+
+            // Show loading state
+            postBtn.disabled = true;
+            postBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+            try {
+                const formData = new FormData();
+
+                // Add description
+                formData.append('Description', description);
+
+                // Add file if selected
+                if (selectedFile) {
+                    formData.append('file', selectedFile);
+                }
+
+                // Send post request
+                const response = await fetch('http://glory-scout.tryasp.net/api/UserProfile/create-post', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        // Don't set Content-Type for FormData
+                        // The browser will set it automatically with the boundary
+                        'Authorization': `Bearer ${localStorage.getItem('token')}` // Add auth token if needed
+                    }
+                });
+
+                if (response.ok) {
+                    // Reset form
+                    createPostInput.value = '';
+                    selectedFile = null;
+
+                    // Remove preview
+                    const preview = document.querySelector('.create-post-preview');
+                    if (preview) {
+                        preview.remove();
+                    }
+
+                    // Refresh feed to show the new post
+                    feedGrid.innerHTML = '';
+                    loadFeed();
+
+                    // Show success message
+                    alert('Post created successfully!');
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to create post');
+                }
+            } catch (error) {
+                console.error('Error creating post:', error);
+                alert('Failed to create post. Please try again.');
+            } finally {
+                // Reset button state
+                postBtn.disabled = false;
+                postBtn.innerHTML = 'Post';
+            }
+        });
+    }
+
+    // Enable post button when text is entered
+    if (createPostInput) {
+        createPostInput.addEventListener('input', function () {
+            if (this.value.trim() || selectedFile) {
+                postBtn.classList.add('active');
+            } else {
+                postBtn.classList.remove('active');
+            }
+        });
+    }
 
     function toggleSidebar() {
         sidebar.classList.toggle('active');
