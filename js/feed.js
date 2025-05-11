@@ -28,6 +28,7 @@ function createPostCard(post, commentsPreview = []) {
     // Create the post initials if no profile picture
     const initials = post.username ? post.username.charAt(0).toUpperCase() : '?';
 
+    // We won't pre-render comments anymore, they'll be loaded on demand
     return `
     <div class="post-card" data-post-id="${post.id}" data-liked="${post.isLikedByCurrentUser}" data-likes-count="${likesCount}">
       <div class="post-header">
@@ -68,12 +69,9 @@ function createPostCard(post, commentsPreview = []) {
       </div>
       
       <div class="post-comments">
-        ${commentsPreview.map(c => `
-          <div class="comment-item">
-            <span class="comment-username">${c.userName}:</span>
-            <span class="comment-content">${c.content}</span>
-          </div>
-        `).join('')}
+        <div class="comments-container">
+          <div class="comments-loading">Loading comments...</div>
+        </div>
         
         <div class="comment-input">
           <input type="text" placeholder="Add a comment..." />
@@ -99,17 +97,11 @@ function renderPosts(posts) {
             post.content = post.description;
         }
 
-        // For preview, fetch first 2 comments (optional, can be optimized)
-        api.get(`http://glory-scout.tryasp.net/api/Post/${post.id}/comments?page=1&pageSize=2`).then(res => {
-            const commentsPreview = res.data || [];
-            feedGrid.insertAdjacentHTML('beforeend', createPostCard(post, commentsPreview));
-            // Make sure to attach listeners after adding to DOM
-            attachPostListeners(post.id);
-        }).catch(() => {
-            feedGrid.insertAdjacentHTML('beforeend', createPostCard(post, []));
-            // Make sure to attach listeners after adding to DOM
-            attachPostListeners(post.id);
-        });
+        // Insert the post into the DOM (no comments loaded yet)
+        feedGrid.insertAdjacentHTML('beforeend', createPostCard(post, []));
+
+        // Attach event listeners to the new post
+        attachPostListeners(post.id);
     });
 }
 
@@ -173,7 +165,7 @@ function attachPostListeners(postId) {
     const postElem = feedGrid.querySelector(`.post-card[data-post-id="${postId}"]`);
     if (!postElem) return;
 
-    // Ensure comments start collapsed
+    // Always ensure comments start collapsed
     const commentsSection = postElem.querySelector('.post-comments');
     commentsSection.classList.remove('active');
 
@@ -226,9 +218,17 @@ function attachPostListeners(postId) {
 
     // Comment toggle
     const commentToggle = postElem.querySelector('.comment-toggle');
+    const commentsContainer = postElem.querySelector('.comments-container');
+    let commentsLoaded = false;
 
     commentToggle.addEventListener('click', function () {
         commentsSection.classList.toggle('active');
+
+        // If comments section is now active and comments haven't been loaded yet, load them
+        if (commentsSection.classList.contains('active') && !commentsLoaded) {
+            loadComments(postId, commentsContainer);
+            commentsLoaded = true;
+        }
     });
 
     // Comment submission
@@ -241,14 +241,24 @@ function attachPostListeners(postId) {
         if (!commentText) return;
 
         try {
-            // Optimistic UI update
-            const commentItem = document.createElement('div');
-            commentItem.className = 'comment-item';
-            commentItem.innerHTML = `
-                <span class="comment-username">You:</span>
-                <span class="comment-content">${commentText}</span>
-            `;
-            commentForm.insertAdjacentElement('beforebegin', commentItem);
+            // Show loading state
+            commentSubmit.disabled = true;
+            commentSubmit.textContent = 'Posting...';
+
+            // Get current username or use 'You' as fallback
+            const currentUsername = 'You'; // Replace with actual username if available
+
+            // API call first, then update UI
+            const response = await api.post(`http://glory-scout.tryasp.net/api/Post/${postId}/comments`, {
+                content: commentText
+            });
+
+            console.log('Comment posted response:', response);
+
+            // Reload all comments to ensure the new one appears
+            loadComments(postId, commentsContainer);
+
+            // Clear input
             commentInput.value = '';
 
             // Update comment count
@@ -256,13 +266,16 @@ function attachPostListeners(postId) {
             const currentCount = parseInt(commentsCountElem.textContent);
             commentsCountElem.textContent = (currentCount + 1) + ' Comments';
 
-            // API call
-            await api.post(`http://glory-scout.tryasp.net/api/Post/${postId}/comments`, {
-                content: commentText
-            });
+            // Make sure comments section is expanded
+            commentsSection.classList.add('active');
+            commentsLoaded = true;
         } catch (e) {
             console.error('Failed to post comment:', e);
-            // You could remove the optimistic comment here if the API call fails
+            alert('Failed to post comment. Please try again.');
+        } finally {
+            // Reset button state
+            commentSubmit.disabled = false;
+            commentSubmit.textContent = 'Post';
         }
     });
 
@@ -272,6 +285,68 @@ function attachPostListeners(postId) {
             commentSubmit.click();
         }
     });
+}
+
+// Function to load comments for a post
+async function loadComments(postId, container) {
+    try {
+        container.innerHTML = '<div class="comments-loading">Loading comments...</div>';
+
+        const response = await api.get(`http://glory-scout.tryasp.net/api/Post/${postId}/comments?page=1&pageSize=20`);
+        console.log('Comments loaded:', response);
+
+        // Process the comment data
+        let comments = [];
+        if (response && response.data) {
+            if (Array.isArray(response.data)) {
+                comments = response.data;
+            } else if (response.data.comments) {
+                comments = response.data.comments;
+            }
+        }
+
+        // Clear loading indicator
+        container.innerHTML = '';
+
+        // If no comments, show a message
+        if (!comments.length) {
+            container.innerHTML = '<div class="no-comments">No comments yet</div>';
+            return;
+        }
+
+        // Render each comment
+        comments.forEach(comment => {
+            console.log('Rendering comment:', comment);
+
+            // Get username from comment
+            let username = 'Anonymous';
+            if (comment.user && comment.user.username) {
+                username = comment.user.username;
+            }
+
+            // Get comment text - check commentedText field
+            let commentText = 'No content';
+            if (comment.commentedText) {
+                commentText = comment.commentedText;
+            } else if (comment.content) {
+                commentText = comment.content;
+            } else if (comment.text) {
+                commentText = comment.text;
+            }
+
+            const commentEl = document.createElement('div');
+            commentEl.className = 'comment-item';
+            commentEl.innerHTML = `
+                <span class="comment-username">${username}:</span>
+                <span class="comment-content">${commentText}</span>
+            `;
+
+            container.appendChild(commentEl);
+        });
+    } catch (error) {
+        console.error('Error loading comments:', error);
+        container.innerHTML = '<div class="comments-error">Failed to load comments. Please try again.</div>';
+    }
 }
 
 // Initialize menu toggle functionality
