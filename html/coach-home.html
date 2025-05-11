@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coach Home - Glory Scout Football Academy</title>
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css//Common/Logout-Btn.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- IMPORT SCRIPTS (axios) -->
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
+    <!--// IMPORT SCRIPTS (axios) //-->
 </head>
 
 <body>
@@ -14,18 +19,22 @@
         <!-- Header -->
         <header class="header">
             <div class="logo">
-                <a href="../html/coach-profile.html"><img src="../images/" alt="my profile" class="logo-img"></a>
+                <a href="./coach-profile.html">
+                    <img src="../images/" class="logo-img"
+                        style="border-radius: 50%; width: 50px; height: 50px; object-fit: cover;">
+                </a>
             </div>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="../html/index.html" class="active">Home</a></li>
-                    <li><a href="../html/player-dashboard.html">Players</a></li>
+                    <li><a href="../html/index.html">Home</a></li>
+                    <li><a href="#" class="active">Coach</a></li>
                     <li><a href="../html/about-us.html">About Us</a></li>
                 </ul>
             </nav>
             <div class="auth-buttons">
-                <a href="login.html" class="login-link">Login</a>
-                <a href="create-account.html" class="signup-btn">Sign Up</a>
+                <a href="./login.html" class="login-btn" id="loginBtn">Login</a>
+                <a href="./create-account.html" class="signup-btn" id="signupBtn">Sign Up</a>
+                <a href="#" id="logoutBtn" class="logout-btn hidden">Logout</a>
             </div>
         </header>
 
@@ -292,7 +301,8 @@
         </footer>
     </div>
 
-    <script src="../js/index.js"></script>
+    <script src="../js/index.js" type="module"></script>
+    <script src="../js/coach-home.js"></script>
 </body>
 
 </html>

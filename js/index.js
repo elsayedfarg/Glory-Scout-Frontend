@@ -1,3 +1,6 @@
+import { SetupUI } from "./Common/SetupUI.js";
+import { logout } from "./Common/Logout.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   // List of selectors to animate on scroll
   const animatedSelectors = [
@@ -108,4 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Trigger scroll animation on page load and scroll event
   window.addEventListener("scroll", animateOnScroll);
   animateOnScroll(); // Fire once on load to ensure elements in view are animated
+
+  SetupUI();
+  document.getElementById("logoutBtn")?.addEventListener("click", logout);
 });

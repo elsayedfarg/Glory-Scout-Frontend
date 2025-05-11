@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Glory Scout Football Academy</title>
     <link rel="stylesheet" href="../css/about-us.css">
+    <link rel="stylesheet" href="../css/Common/Logout-Btn.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -17,15 +18,16 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="../html/index.html">Home</a></li>
-                    <li><a href="../html/player-home.html">Players</a></li>
-                    <li><a href="../html/coach-home.html">Coaches</a></li>
-                    <li><a href="../html/about-us.html" class="active">About Us</a></li>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./player-dashboard.html">Players</a></li>
+                    <li><a href="./coach-dashboard.html">Coaches</a></li>
+                    <li><a href="./about-us.html" class="active">About Us</a></li>
                 </ul>
             </nav>
             <div class="auth-buttons">
-                <a href="login.html" class="login-btn">Login</a>
-                <a href="create-account.html" class="signup-btn">Sign Up</a>
+                <a href="./login.html" class="login-btn" id="loginBtn">Login</a>
+                <a href="./create-account.html" class="signup-btn" id="signupBtn">Sign Up</a>
+                <a href="#" id="logoutBtn" class="logout-btn hidden">Logout</a>
             </div>
         </div>
     </header>
@@ -168,7 +170,8 @@
         </div>
     </footer>
 
-    <script src="../js/about-us.js"></script>
+    <script src="../js/index.js" type="module"></script>
+    <script src="../js//Common/Logout.js" type="module"></script>
 </body>
 
 </html>

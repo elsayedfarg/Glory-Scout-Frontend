@@ -42,10 +42,10 @@
     transition: color 0.3s ease;
   }
   
-  a:hover {
+  /* a:hover {
     color: var(--accent-green);
   }
-  
+   */
   ul {
     list-style: none;
   }
@@ -116,7 +116,7 @@
   }
   
   .signup-btn:hover {
-    background-color: #3cca70;
+    /* background-color: #3cca70; */
     color: #121212;
     transform: translateY(-2px);
   }
@@ -324,13 +324,13 @@
     transition: transform 0.3s ease;
   }
   
-  .learn-more:hover {
+  /* .learn-more:hover {
     color: var(--accent-green);
-  }
+  } */
   
-  .learn-more:hover i {
+  /* .learn-more:hover i {
     transform: translateX(5px);
-  }
+  } */
   
   .achievement-image {
     flex: 1;
@@ -758,7 +758,7 @@
   }
   
   .explore-btn:hover {
-    background-color: #3cca70;
+    /* background-color: #3cca70; */
     color: #121212;
     transform: translateY(-2px);
   }
@@ -908,9 +908,9 @@
     font-size: 14px;
   }
   
-  .social-link:hover {
+  /* .social-link:hover {
     background-color: var(--accent-green);
-  }
+  } */
   
   .social-link:hover i {
     color: var(--primary-bg);

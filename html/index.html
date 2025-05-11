@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Glory Scout Football Academy</title>
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/Common/Logout-Btn.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -18,15 +19,14 @@
             </div>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="home.html" class="active">Home</a></li>
-                    <li><a href="./player-home.html">Players</a></li>
-                    <li><a href="./coach-home.html">Coaches</a></li>
+                    <li><a href="./index.html" class="active">Home</a></li>
                     <li><a href="./about-us.html">About Us</a></li>
                 </ul>
             </nav>
             <div class="auth-buttons">
-                <a href="login.html" class="login-link">Login</a>
-                <a href="create-account.html" class="signup-btn">Sign Up</a>
+                <a href="./login.html" class="login-btn" id="loginBtn">Login</a>
+                <a href="./create-account.html" class="signup-btn" id="signupBtn">Sign Up</a>
+                <a href="#" id="logoutBtn" class="logout-btn hidden">Logout</a>
             </div>
         </header>
 
@@ -293,7 +293,9 @@
         </footer>
     </div>
 
-    <script src="../js/index.js"></script>
+    <script src="../js/index.js" type="module"></script>
+    <script src="../js/Common/SetupUI.js" type="module"></script>
+    <script src="../js/Common/Logout.js" type="module"></script>
 </body>
 
 </html>

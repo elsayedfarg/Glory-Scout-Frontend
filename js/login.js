@@ -65,11 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    const logoutBtn = document.getElementById("logoutBtn");
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", logout);
-    }
-
     createMobileMenu("signup");
     SetupUI();
     document.getElementById("logoutBtn")?.addEventListener("click", logout);
